@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue_v-if</title>
+</head>
+<body>
+    <div id="app">
+<!--        v-if 当为false的时候会不显示-->
+        <h1 v-if="message === 'yes'">YES</h1>
+        <h1 v-else>NO</h1>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            message:true
+        }
+    });
+</script>
+</body>
+</html>
