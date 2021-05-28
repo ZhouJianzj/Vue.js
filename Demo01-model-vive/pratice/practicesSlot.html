@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<myslot>
+				<myslot-title slot="myslot-title" v-bind:title="title"></myslot-title>
+				<myslot-text slot= "myslot-text" :text="text"></myslot-text>
+			</myslot>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("myslot",{
+				template:"<div>\
+					<slot name='myslot-title'></slot>\
+					<slot name='myslot-text'></slot>\
+					</div>"
+			})
+			Vue.component("myslot-title",{
+				props:['title'],
+				template:"<p>{{title}}</p>"
+				
+			})
+			Vue.component("myslot-text",{
+				props:['text'],
+				template:"<p>{{text}}</p>"
+			})
+			new Vue({
+				el:"#app",
+				data:{
+					title:"Hello",
+					text:"World!"
+				}
+			})
+		</script>
+	</body>
+</html>
