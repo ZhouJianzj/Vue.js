@@ -5,22 +5,18 @@
     <title>Vue_v-else-if</title>
 </head>
 <body>
-<div>
-    <select id="select1">
-        <option disabled >--请选择--</option>
-        <option >A</option>
-        <option >B</option>
-        <option >C</option>
-        <option >D</option>
-    </select>
+<div id="div1">
+    <span v-if=" message === 'A' ">A</span>
+    <span v-if=" message === 'C' ">C</span>
+    <span v-if=" message === 'B' ">B</span>
+    <span v-if=" message === 'D' ">D</span>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
     var vue = new Vue({
-        el:"#select1",
+        el:"#div1",
         data:{
             message:"A"
-
         }
     });
 </script>

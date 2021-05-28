@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义组件</title>
+</head>
+<body>
+<div id="personComponent">
+<!--  view中的变量绑定上model中的数据,-->
+    <my-component-name v-bind:text="message"></my-component-name>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    Vue.component('my-component-name', {
+        //props小道具的意思，也就是Dom对象中的参数
+        props:["text"],
+        template:'<h1>{{text}}</h1>',
+    })
+    var vue = new Vue({
+        el:"#personComponent",
+        data:{
+            message:"hello world!"
+        }
+    })
+
+</script>
+</body>
+</html>

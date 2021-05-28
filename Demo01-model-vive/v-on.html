@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue_v-on</title>
+</head>
+<body>
+    <div>
+        <button id="button1" v-on:click="buttonDo">{{message}}</button>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el:"#button1",
+        data:{
+            message:"点击"
+        },
+        methods:{
+            //方法名字 加上方法体
+            "buttonDo":function (event) {
+                alert("succeed")
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
