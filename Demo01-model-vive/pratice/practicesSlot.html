@@ -8,12 +8,14 @@
 		<div id="app">
 			<myslot>
 				<myslot-title slot="myslot-title" v-bind:title="title"></myslot-title>
+				<!-- v-bind可以使用:代替 -->
 				<myslot-text slot= "myslot-text" :text="text"></myslot-text>
 			</myslot>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script type="text/javascript">
 			Vue.component("myslot",{
+				// 也可不适用字符串的拼接使用\ 代表的是换行的意思·
 				template:"<div>\
 					<slot name='myslot-title'></slot>\
 					<slot name='myslot-text'></slot>\
