@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>插槽</title>
+	</head>
+	<body>
+		<div id="app">
+			<todo>
+				<!-- 指定插槽的名字，并且绑定数据 -->
+				<todo-title slot="todo-title" v-bind:title="title"></todo-title>
+				<!-- 
+				 Vue.component
+				 1、@click事件绑定自己的clickmethods方法
+				 2、slot插槽中v-bind绑定var vu=new Vue()中的方法
+				 3、component自己的方法里面需要使用到的是$.emit("clickmethods",参数)
+				 -->
+				<todo-li slot="todo-li" v-for="(item,index) in litext" :key="index" 
+				v-bind:li="item" :index="index" v-on:remove="vuRemove(index)"></todo-li>
+			</todo>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		
+		<script type="text/javascript">
+			Vue.component("todo",{
+				// name指定插在 插槽上的组件
+				template:"<div>" +
+					"<slot name ='todo-title'></slot>"+
+					"<ul>"+
+					"<slot name = 'todo-li'></slot>" +
+					"</ul>"+
+				"</div>"
+			})
+			
+			Vue.component("todo-title",{
+				// 组件上的参数
+				props:["title"],
+				template:"<p>{{title}}</p>"
+			})
+			
+			Vue.component("todo-li",{
+				props:["li","index" ],
+				template:"<li>{{index}}----{{li}}<button @click='remove'>删除</button></li>",
+				methods:{
+					remove:function(index){
+						// emit发出的意思  绑定事件和传递来的参数
+					this.$emit("remove",index)
+					}
+				}
+				
+			})
+			
+			new Vue({
+				el:"#app",
+				data:{
+					title:"技术栈",
+					litext:["java","mysql","dubbo","redis","spring"]
+				},
+				methods:{
+					vuRemove:function(index){
+						// 数组的删除，1、下表 2、从下标开始算一个，这里的1代表的就是下表元素本身 3、后面可以写数组元素
+						this.litext.splice(index,1,"java")
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
