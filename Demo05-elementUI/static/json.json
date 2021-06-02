@@ -1,0 +1,19 @@
+{
+	"name":"zhoujian",
+	"age":12,
+	"address":{
+		"one":"中国",
+		"Two":"江苏",
+		"Three":"南京"
+	},
+	"array":[
+		{
+			"name":"bilibli",
+			"address":"https://www.bilibili.com/"
+		},
+		{
+			"name":"github",
+			"adress":"gitHub.com"
+		}
+	]
+}

@@ -1,5 +1,10 @@
 <template>
-  <h1>login</h1>
+  <div>
+    <h1>login</h1>
+<!--    组件接受参数-->
+    {{$route.params.id}}
+    {{$route.params.name}}
+  </div>
 </template>
 
 <script>
