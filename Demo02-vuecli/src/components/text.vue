@@ -1,10 +1,16 @@
 <template>
-    <h1>text</h1>
+    <h1>{{message}}</h1>
 </template>
 
 <script>
     export default {
-        name: "text"
+        name: "text",
+        //自定义的组件是这样是由data函数传递参数的
+        data(){
+          return{
+            message:"text"
+          }
+        }
     }
 </script>
 
