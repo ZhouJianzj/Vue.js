@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    使用简单方便的快捷的vue项目搭建方式，直接引入文件，浏览器会去加载-->
+<!--    这个实现的是同过vm来改变view层的数据，一开始view层的数据是来自于model层的message-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{message}}仓库</h1>
+    <ul>
+        <li v-for="thing in things">{{thing}}</li>
+    </ul>
+</div>
+
+<script>
+<!--    创建个一个vue对象，存放model层数据，和方便在浏览器consloe改变数据的-->
+  var vue =   new Vue({
+      //id选择器
+      el:"#app",
+      //数据存放区model层
+      data:{
+          message:"",
+          things:[
+
+          ]
+      },
+      //使用api的数据，但是这个api没有数据，有数据的话返回的是数据
+      create(){
+          fetch('http://localhost:8080/zj')
+          .then( response => response.json())
+          .then( json => {
+              this.things = json.things
+          })
+      }
+  })
+</script>
+</body>
+</html>
