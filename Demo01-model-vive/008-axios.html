@@ -36,24 +36,24 @@
 					return{
 						// 接受返回的json数据
 						info:{
-							// 这里需要注意的是需要书写json格式
-								"name":null,
-								"age":null,
-								"address":{
-									"one":null,
-									"Two":null,
-									"Three":null
-								},
-								"array":[
-									{
-										"name":null,
-										"address":null
-									},
-									{
-										"name":null,
-										"adress":null
-									}
-								]
+							// 这里需要注意的是需要书写json格式,也可以书写，但是你调用的时候需要晓得里面的数据结构 
+								// "name":null,
+								// "age":null,
+								// "address":{
+								// 	"one":null,
+								// 	"Two":null,
+								// 	"Three":null
+								// },
+								// "array":[
+								// 	{
+								// 		"name":null,
+								// 		"address":null
+								// 	},
+								// 	{
+								// 		"name":null,
+								// 		"adress":null
+								// 	}
+								// ]
 							}
 						
 					}
@@ -61,7 +61,8 @@
 				// 钩子函数，嵌入的意思
 				mounted() {
 					// 链式的编程，get请求url，than然后得到响应数据，数据传递
-					axios.get("../Demo01-model-vive/json/json.json").then(response =>(this.info = response.data))
+					axios.get("../Demo01-model-vive/json/json.json")
+					.then(response =>(this.info = response.data))
 				}
 			})
 		</script>

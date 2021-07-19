@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="div1">
+			<input type="text"  v-model="inputOne"/><br>
+			<input type="text"  v-model="inputTwo"/><br>
+			计算结果为：{{add}}{{result}}
+			
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:"#div1",
+				data:{
+					inputOne:0,
+					inputTwo:0,
+					result:0
+				},
+				computed:{
+					add:function(){
+						this.result = Number(this.inputOne)  + Number(this.inputTwo)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

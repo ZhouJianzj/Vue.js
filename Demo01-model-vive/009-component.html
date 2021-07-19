@@ -25,5 +25,26 @@
     })
 
 </script>
+<!-- 第二个自定义的组件 -->
+<div id="div1">
+	<!-- 2  、 使用到自定义template 中的假设属性，然后使用model层数据绑定到view层的 v-bind -->
+	<zhoujian v-bind:text = "message"></zhoujian>
+</div>
+<script type="text/javascript">
+	
+	Vue.component("zhoujian",{
+		//  3  、需要给出给出假设的真实属性text属性
+		props:['text'],
+		// 4  、展示值
+		template:"<p>{{text}}</p>"
+	})
+	var app = new Vue({
+		el:"#div1",
+		data:{
+			// 1 、 想要给message数据展示到自定义的template中去，首先假设自定义的模板中用这个属性
+			message:"zhoujian"
+		}
+	})
+</script>
 </body>
 </html>
