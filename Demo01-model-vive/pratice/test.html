@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="div2">
+			<select v-model="mes">
+				<option disabled="disabled" value="" ></option>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+			</select>
+			<p>{{mes}}</p>
+		</div>
+		<script type="text/javascript">
+			var app1 = new Vue({
+				el:"#div2",
+				data:{
+					mes:"ad"
+				}
+			})
+		</script>
+	</body>
+</html>

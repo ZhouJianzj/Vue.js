@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="div1">
+			<h1>当前数量：{{counter}}</h1>
+			<!-- 这样也可以实现但是不好有过多的操作，所以需要抽离出来变为一个函数 -->
+			<!-- <button type="button" v-on:click="counter++">+</button>
+			<button type="button" v-on:click="counter--">-</button> -->
+			<button type="button" v-on:click="add()">+</button>
+			<button type="button" v-on:click="sub()">-</button>
+		</div>
+		<script type="text/javascript">
+			var  app = new Vue({
+				el:"#div1",
+				data:{
+					counter:0
+				},
+				methods:{
+					add:function(){
+						this.counter++
+					},
+					sub:function(){
+						if(this.counter == 0){
+							console.log("减不了了")
+						}else{
+							this.counter--
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
