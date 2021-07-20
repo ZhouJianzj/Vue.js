@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>首页</h1>
-    <router-link to="/Content">Content</router-link>
+    <router-link to="/content">Content</router-link>
     <router-link to="/text">Text</router-link>
     <!--为了展示组件的内容-->
     <router-view></router-view>
