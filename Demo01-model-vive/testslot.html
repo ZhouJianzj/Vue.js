@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="div1">
+			<contant>
+				<title-c slot = "title-c" v-bind:contact = "title"></title-c>
+				<!-- 参数绑定，发射出来的方法在这，替代了事件，实际上只是在事件上面自己封装了一下子，这是时候发射出来的方法也称自定的事件
+				 就可以调用vue对象中的方法了 -->
+				<il-c slot = "il-c" v-for="(item,index) in list" v-bind:contact="item" v-bind:index="index"
+				v-on:remove="doremove(index)"></il-c>
+			</contant>
+		</div>
+		
+			
+		
+		<script type="text/javascript">
+			Vue.component("contant",{
+				template:"<div >\
+						<slot name = 'title-c'></slot>\
+						<ul>\
+						<slot name ='il-c'></slot>\
+						</ul>\
+					</div>"
+				
+			})
+			Vue.component("title-c",{
+				props:["contact"],
+				template:"<p>{{contact}}</p>"
+				
+			})
+			Vue.component("il-c",{
+				props:["contact","index"],
+				template:
+					"<li>{{contact}}<button @click='remove'>删除</button></li>",
+				methods:{
+					// 自定义的组件只能自己调用自己的方法，为了解决这个问题我们需要把这个方法发射出去emit
+					remove:function(index){
+						// 之前执行
+						// alert(this.index)
+						// 给自定的方法发射出去，需要指定方法名字和参数
+						this.$emit("remove",index)
+						// 之后执行
+						alert("+++")
+					}
+				}
+				
+			})
+			var app = new Vue({
+				el:"#div1",
+				data:{
+					title:"技术栈",
+					list:["java","linux","前端"]
+				},
+				methods:{
+					doremove:function(index){
+						alert(index)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
