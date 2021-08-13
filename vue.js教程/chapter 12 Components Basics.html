@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+	<!-- 自定义的组件 ，自定义的属性，自定义的Dom元素方法-->
+	<button-counter v-bind:title="msg" @clicknow="clickn">
+		<!-- slot插槽的引入 -->
+		<h2>hi...h2</h2>
+	</button-counter>
+	
+	<button-counter title="title2 : "></button-counter>
+	
+</div>
+<script type="text/javascript">
+	// 自定义组件的声明，这种方式叫做全局的注册
+Vue.component('button-counter', {
+	// 自定义属性的声明，组件中的一部分{{}}来自这里，这里的属性可以绑定mv中的data中元素,
+	props: ['title'],
+	// 自定义 组件的data书写方式，组件中的一部分{{}}都来自这里的data
+	data: function () {
+		return {
+		  count: 0,
+		  value:"zhoujian"
+		}
+	},
+	template: '<div><h1>hi...</h1><button v-on:click="clickfun">{{title}} You clicked me {{ count }} times.</button>\
+	<slot></slot><br />\
+	<input type="text" name="" id="" v-model:value="value" /><br>\
+	<input type="text" name="" id="" v-bind:value="value" /></div>',
+	
+	methods:{
+		clickfun : function () {
+			this.count ++;
+			// 自定义函数的声明，mv的中的函数可以绑定到这里的函数上去，要求是要符合参数的规范
+			this.$emit('clicknow', this.count);
+		}
+	}
+})
+var vm = new Vue({
+	el : "#app",
+	data : {
+		msg:"zhoujian :"
+	},
+	methods:{
+		clickn : function (e) {
+			console.log(e);
+		}
+	}
+});
+</script>
+<style type="text/css">
+
+</style>
+</body>
+</html>

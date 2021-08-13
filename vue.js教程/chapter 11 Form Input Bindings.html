@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+	<div id="example-1">
+		<!-- placeholder:占位符的意识，预先展示的 -->
+		<input v-model="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+		
+		<textarea v-model="message2" placeholder="add multiple lines"></textarea>
+		<p style="white-space: pre-line;">{{ message2 }}</p>
+		<br />
+		<!-- 展示的是给多选框绑定数据的，接收的时候需要使用一个数组接受 -->
+		<div style="margin-top:20px;">
+			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+			<label for="jack">Jack</label>
+			<input type="checkbox" id="john" value="John" v-model="checkedNames">
+			<label for="john">John</label>
+			<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+			<label for="mike">Mike</label>
+			<br>
+			<span>Checked names: {{ checkedNames }}</span>
+		</div>
+		<!-- 展示的单选框的数据绑定 -->
+		<div style="margin-top:20px;">
+			<input type="radio" id="one" value="One" v-model="picked">
+			<label for="one">One</label>
+			<br>
+			<input type="radio" id="two" value="Two" v-model="picked">
+			<label for="two">Two</label>
+			<br>
+			<span>Picked: {{ picked }}</span>
+		</div>
+		<!-- 展示数据提交 -->
+		<button type="button" @click="submit">提交</button>
+		<!-- 展示的是下拉列表的选择，selected将不会奏效,只用改变data中对应model绑定的数值 -->
+		<select name="name" v-model="selects">
+			<option value="17">17</option>
+			<option value="18" selected="selected">18</option>
+			<option value="19">19</option>
+			<option value="20">20</option>
+		</select><br>
+		<span>select:{{selects}}</span>
+	</div>
+	
+</div>
+<script type="text/javascript">
+var vm = new Vue({
+	el : "#app",
+	data : {
+		selects:"",
+		message : "test",
+		message2 :"hi",
+		// 赋默认值的时候会自动的勾选单选框和多选框 
+		checkedNames : ['Jack', 'John'],
+		picked : "Two"
+	},
+	methods: {
+		submit : function () {
+			console.log(this.checkedNames);
+			
+		}
+	}
+});
+</script>
+<style type="text/css">
+
+</style>
+</body>
+</html>

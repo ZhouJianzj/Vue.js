@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js教程/vue.js" type="text/javascript">
+			
+		</script>
+	</head>
+	<body>
+		<div id = "app" @click="clickOne">
+			<div @click.stop="clickTwo">
+				click me
+			</div>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el : "#app",
+				methods : {
+					clickOne : function(){alert("One")},
+					clickTwo : function(){alert("Two")}
+					
+				}
+			})
+		</script>
+	</body>
+	
+</html>

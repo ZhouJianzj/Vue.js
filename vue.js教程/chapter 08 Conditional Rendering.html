@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+	<!-- 使用 v-if 进行展示的时候元素是没有加载到页面的 -->
+	<div v-if="type === 'A'">
+	  A
+	</div>
+	<div v-else-if="type === 'B'">
+	  B
+	</div>
+	<div v-else-if="type === 'C'">
+	  C
+	</div>
+	<div v-else>
+	  Not A/B/C
+	</div>
+	<!--使用 v-show 页面是加载元素的只是set了css的属性为disabled 
+		对于经常切换的使用show，对不不经常改动的就使用if
+	-->
+	<h1 v-show="ok">Hello!</h1>
+</div>
+<script type="text/javascript">
+var vm = new Vue({
+	el : "#app",
+	data : {
+		type : "B",
+		ok : false
+	}
+});
+</script>
+<style type="text/css">
+
+</style>
+</body>
+</html>

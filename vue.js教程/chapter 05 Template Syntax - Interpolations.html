@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+	{{msg}}
+	<!-- 只会改变一次也就是第一次赋值的时候 -->
+	<p v-once>{{once}}</p>
+	
+	<p>Using mustaches: {{ rawHtml }}</p>
+	<!-- 会给符合html语法的字符串转变为html -->
+	<p v-html="rawHtml"></p>
+	<!-- 给元素的属性赋值，这里使用的是class选择器点的方式实现的 -->
+	<div v-bind:class="color">test...</div>
+	<!-- 换括号里可以进行运算 -->
+	<p>{{ number + 1 }}</p>
+	<!-- 可以进行三元运算 -->
+	<p>{{ ok ? 'YES' : 'NO' }}</p>
+	<!-- 可以进行函数方法的执行 -->
+	<p>{{ message.split('').reverse().join('') }}</p>
+</div>
+<script type="text/javascript">
+var vm = new Vue({
+	el : "#app",
+	data : {
+		msg : "hi ",
+		rawHtml : '<span style="color:red">this is should be red</span>',
+		color:'blue',
+		number : 10,
+		ok : 1,
+		message : "vue",
+		once : "zhoujian"
+	}
+});
+vm.msg = "hi....";
+vm.once = "周健"
+</script>
+<style type="text/css">
+.red{color:red;}
+.blue{color:blue; font-size:100px;}
+</style>
+</body>
+</html>

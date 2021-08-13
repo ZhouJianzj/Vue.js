@@ -10,7 +10,7 @@
         for (let i = 1; i <= 15; i++) {
           data.push({
             key: i,
-            label: `备选项 ${    i }`,
+            label: `备选项 ${i }`,
             // disabled: i % 4 === 0
           });
         }

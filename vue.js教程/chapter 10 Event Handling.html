@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app">
+	<div id="example-1">
+		<button v-on:click="counter += 1"> 数值 :  {{ counter }} </button><br />
+		<button v-on:dblclick="greet('abc', $event)">Greet</button>
+		<button type="button" @click="count">计数：{{counter}}</button>
+	</div>
+</div>
+<script type="text/javascript">
+var vm = new Vue({
+	el : "#app",
+	data : {
+		counter: 0,
+		name : "vue"
+	},
+	methods:{
+		greet : function (str, e) {
+			alert(str);
+			console.log(e);
+		},
+		// 演示的是计数使用函数的方式而不是在元素里面写表达式
+		count : function(){
+			// 如果想要调用自己的属性就需要使用到this
+			this.counter++
+			
+		}
+	}
+});
+</script>
+<style type="text/css">
+
+</style>
+</body>
+</html>
