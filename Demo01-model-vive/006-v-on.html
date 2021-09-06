@@ -6,7 +6,8 @@
 </head>
 <body>
     <div>
-        <button id="button1" v-on:click="buttonDo">{{message}}</button>
+		<!-- 这里可以使用v-on或者是@都可以完成事件的绑定 -->
+        <button id="button1" @click="buttonDo">{{message}}</button>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>

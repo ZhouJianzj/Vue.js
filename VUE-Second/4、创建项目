@@ -1,0 +1,7 @@
+安装webpack包管理工具，方便打包管理vue项目
+命令： npm install webpack -g
+
+使用webpack初始化vue项目
+命令：vue init webpack VueProjectName 
+在这里我全是Y表示全部使用
+初始化成功之后

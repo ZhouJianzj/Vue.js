@@ -8,6 +8,7 @@
 			<switch checked="true"></switch>
 		</view>
 	</view>
+
 </template>
 
 <script>

@@ -1,0 +1,3 @@
+使用淘宝的镜像
+命令 npm install cnpm -g 
+解释： cnpm淘宝的  -g表示的是全局安装

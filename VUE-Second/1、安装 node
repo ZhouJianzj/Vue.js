@@ -1,0 +1,9 @@
+（以前安装过了）
+
+下载node.js地址：https://nodejs.org/zh-cn/
+
+安装成功shell中输入node会显示下面的内容
+PS D:\workspace\VUE\VUE-Second> node
+Welcome to Node.js v14.15.4.
+Type ".help" for more information.
+>
