@@ -24,8 +24,8 @@
 				</tr>
 			</table>
 			<!-- v-for的使用 以及数组的遍历和普通方式的获取 -->
-			<ul v-for="a,index in array":key=index>
-				<li>{{a}}</li>
+			<ul>
+				<li v-for="a,index in array":key=index>{{a}}</li>
 			</ul>
 			<ul>
 				<li>{{array[0]}}</li>
