@@ -27,6 +27,8 @@
 			<ul>
 				<li v-for="a,index in array":key=index>{{a}}</li>
 			</ul>
+			<button type="button" @click="liSub()"> - </button>
+			<button type="button" @click="liAdd()"> + </button>
 			<ul>
 				<li>{{array[0]}}</li>
 			</ul>
@@ -38,12 +40,20 @@
 			<button type="button" @click="sub()">-</button>
 			<span>{{ num }}</span>
 			<button type="button" @click="add()">+</button>
+			<br>
+			<!-- enter键回弹的时候alter -->
+			<input type="text" name="" id="" value="" @keyup="doKeyUp" /><br>
+			<!-- v-model使用在那里vue中的data熟悉值就绑定到相应标签的内容中，data中的属性也随标签的值的改变而改变 -->
+			<input type="text" v-model="va" />{{va}}
+			<!-- v-bind不是双向绑定的 -->
+			<input type="text" v-bind:value="va"/>{{va}}
 		</div>
 	</body>
 	<script type="text/javascript">
 		var vue = new Vue({
 			el:"#app",
 			data:{
+				va:"zhoujian",
 				num:1,
 				mes:"<h1>zhoujian</h1>",
 				mess:"<h1>zhoujian</h1>",
@@ -77,6 +87,15 @@
 						alert("已经最小了！")
 						this.num = 0
 					}
+				},
+				liAdd:function(){
+					this.array.push(4)
+				},
+				liSub:function(){
+					this.array.shift()
+				},
+				doKeyUp:function(){
+					alert("666")
 				}
 			}
 		})
