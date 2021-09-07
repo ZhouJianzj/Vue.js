@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<h1>{{ mes }}</h1>
+			<!-- 对象的获取 -->
+			<table border="1" cellpadding="10" cellspacing="" >
+				<tr>
+					<td>id</td>
+					<td>{{object.id}}</td>
+				</tr>
+				<tr>
+					<td>name</td>
+					<td>{{object.name}}</td>
+				</tr>
+				<tr>
+					<td>age</td>
+					<td>{{object.age}}</td>
+				</tr>
+			</table>
+			<!-- v-for的使用 以及数组的遍历和普通方式的获取 -->
+			<ul v-for="a,index in array":key=index>
+				<li>{{a}}</li>
+			</ul>
+			<ul>
+				<li>{{array[0]}}</li>
+			</ul>
+			<!-- v-text的使用,支持字符串的拼接-->
+			<span v-text="mes + 'zhoujian'"></span>
+			<span v-html="mess"></span>
+			<button type="button" @click="dodo(mes)">@click</button>
+			<br>
+			<button type="button" @click="sub()">-</button>
+			<span>{{ num }}</span>
+			<button type="button" @click="add()">+</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el:"#app",
+			data:{
+				num:1,
+				mes:"<h1>zhoujian</h1>",
+				mess:"<h1>zhoujian</h1>",
+				array:[
+					000,001,002,003
+				],
+				object:{
+					id:001,
+					name:"zhoujian",
+					age:23
+				}
+			},
+			methods:{
+				dodo:function(e){
+					alert(e)
+					this.mes="周健"
+				},
+				add:function(){
+					// console.log("add")
+					this.num++
+					if(this.num > 10){
+						alert("已经是最大了！")
+						this.num = 10
+					}
+					
+				},
+				sub:function(){
+					// console.log("sub")
+					this.num--
+					if(this.num < 0){
+						alert("已经最小了！")
+						this.num = 0
+					}
+				}
+			}
+		})
+	</script>
+</html>
