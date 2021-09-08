@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<button type="button" @click="getJoke()">获取一个笑话</button>
+			<p>{{ joke }}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el:"#app",
+			data:{
+				joke:"笑话很好笑的哦！"
+			},
+			methods:{
+				getJoke:function(){
+					// 这里的this没有变
+					console.log(this.joke)
+					// 解决
+					var that = this
+					axios.get("https://autumnfish.cn/api/joke").then(function(response){
+						console.log(response)
+						// 这里 this.joke不是data里面的joke了因为this变了
+						console.log(this.joke)
+						
+						that.joke = response.data
+					},function(err){
+						console.log(err)
+					})
+				}
+			}
+		})
+	</script>
+</html>

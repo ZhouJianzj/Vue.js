@@ -29,7 +29,7 @@
             <span class="index">{{index + 1}}.</span>
             <label>{{item}}</label>
 			<!-- 移除事情的按钮 -->
-            <button class="destroy" @click="outputThings()" ></button>
+            <button class="destroy" @click="outputThings(index)" ></button>
           </div>
         </li>
       </ul>
@@ -70,8 +70,9 @@
 				   this.userInput=""
 			  }
 		   },
-		   outputThings:function(){
-			   this.items.shift()
+		   outputThings:function(index){
+			   // this.items.shift()
+			   this.items.splice(index,1)
 		   },
 		   clear:function(){
 			   this.items = []
