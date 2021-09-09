@@ -9,7 +9,8 @@
 		<div id="div1">
 			<input type="text"  v-model="inputOne"/><br>
 			<input type="text"  v-model="inputTwo"/><br>
-			计算结果为：{{add}}{{result}}
+			<!-- 方法一个可以使用使用{{的方式调用}} -->
+			计算结果为：{{add}}{{result}}{{doDo()}}
 			
 		</div>
 		<script type="text/javascript">
@@ -23,6 +24,11 @@
 				computed:{
 					add:function(){
 						this.result = Number(this.inputOne)  + Number(this.inputTwo)
+					}
+				},
+				methods:{
+					doDo:function(){
+						alert("=====")
 					}
 				}
 			})

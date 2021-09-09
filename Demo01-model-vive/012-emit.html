@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<title-component v-bind:title="title">
+				<il-component slot = "il-component" v-for="c,index in context" :key=index v-bind:context="c"
+				 :index="index" @remove="deleteElement(index)"></il-component>
+			</title-component>
+		</div>
+		<script type="text/javascript">
+	
+			
+			Vue.component("title-component",{
+				props:["title"],
+				template:"\
+				<div>\
+				<h1>{{title}}</h1>\
+				<slot name='il-component'></slot>\
+				</div>\
+				"	
+			})
+			Vue.component("il-component",{
+				props:["context","index"],
+				template:"\
+					<li>{{index}}----{{context}}<button @click='remove(index)'>delete</button></li>\
+				"
+				,
+				methods:{
+					remove:function(index){
+						this.$emit("remove",index)
+					}
+				}
+				
+				
+			})
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					title:"技术栈",
+					context:[
+						"java",
+						"c++",
+						"c",
+						"python"
+					]
+				},
+				methods:{
+					deleteElement:function(index){
+						this.context.splice(index,1)
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

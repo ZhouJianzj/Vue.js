@@ -9,6 +9,7 @@
 			<todo>
 				<!-- 指定插槽的名字，并且绑定数据 -->
 				<todo-title slot="todo-title" v-bind:title="title"></todo-title>
+				
 				<todo-li slot="todo-li" v-bind:li="litext"></todo-li>
 			</todo>
 		</div>
@@ -41,6 +42,49 @@
 				data:{
 					title:"技术栈",
 					litext:"java"
+				}
+			})
+		</script>
+		
+		<!-- 第二个自定义组件的插槽 -->
+		<!-- 注意的是自定义的组件命名的时候名字比较长的需要使用 -  连接 -->
+		<!-- 自定义组件的时候，组件中的属性需要使用小写的方式 -->
+		
+		<div id="div2">
+			<title-component v-bind:title="title">
+				<context-one slot="context-one" v-bind:contextone="one"></context-one>
+				<context-two slot="context-two" v-bind:two="two"></context-two>
+			</title-component>
+		</div>
+		<script type="text/javascript">
+			Vue.component("title-component",{
+				props:["title"],
+				template:"\
+					<div>\
+					<h1>{{title}}</h1>\
+					<slot name='context-one'></slot><br>\
+					<slot name='context-two'></slot>\
+					</div>\
+				"
+			})
+			Vue.component("context-one",{
+				props:["contextone"],
+				template:"\
+					<b>{{contextone}}</b>\
+				"
+			})
+			Vue.component("context-two",{
+				props:["two"],
+				template:"\
+					<b>{{two}}</b>\
+				"
+			})
+			var vue = new Vue({
+				el:"#div2",
+				data:{
+					one:"周",
+					two:"健",
+					title:"name"
 				}
 			})
 		</script>
