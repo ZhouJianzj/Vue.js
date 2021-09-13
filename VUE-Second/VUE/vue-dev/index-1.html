@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{ name }}</p>
+			<!-- <p>{{ b }}</p> -->
+			
+			<!-- 展示实例的自定义属性 -->
+			<p>{{ $options.name }}</p>
+			
+			<!-- 使用ref属性 -->
+			<h1 ref="h1">hello</h1>
+			<h2 ref="h2">hello</h2>
+			
+			<!-- v-once值初始化之后就不改变了 -->
+			<p>{{ more}}</p>
+			<p v-once>{{ once }}</p>
+			
+		</div>
+		<button type="button" onclick="doMount()">挂载</button>
+		<script type="text/javascript">
+			var vm = new Vue({
+				// el:"#app",
+				data:{
+					name:"zhoujian",
+					once:"changeOnce",
+					more:"changeMore"
+				},
+				name:"name"
+			})
+			// 是由钩子函数挂载元素，代替el的写法
+			.$mount("#app")
+			// doMount = function (){
+			// 	vm.$mount("#app")
+			// }
+			
+			// nextTick在DOM更新之后执行的回调函数，这里的两种方式获取更新后的DOM的差别
+			vm.name = "zjzjzj"
+			// 并没有获取到改变之后的DOM
+			// console.log(document.querySelector("#app").innerHTML)
+			// 获取到改变之后的DOM
+			// vm.$nextTick(function(){
+			// 	console.log(document.querySelector("#app").innerHTML)
+			// })
+			
+			// 监听值的变化
+			vm.$watch("name",function(newVal,oldVal){
+				alert(newVal,oldVal)
+			})
+			vm.name = "hhhhh"
+			console.log(vm.$el)
+			
+			// 挂载成功
+			// vm.$el.style.color = "red"
+			
+			// 获取的是所有使用ref属性的标签
+			// console.log(vm.$refs)
+			// 获取指定的ref，设置标签的样式
+			// console.log(vm.$refs.h1)
+			// vm.$refs.h1.style.color = "green"
+			
+			// 获取自定义的属性 
+			// console.log(vm.$options.name)
+			
+			// $的使用
+			// console.log(vm.name)
+			// console.log(vm.$data.name)
+			
+			// 改变值，观察到once值没有改变
+			// vm.more="more"
+			// vm.once="once"
+			
+			// 外面声明data中没有的值，会警告不建议使用
+			// vm.b = "name"
+		</script>
+	</body>
+</html>

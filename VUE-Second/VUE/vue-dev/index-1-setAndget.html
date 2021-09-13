@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>{{ name }}</h1>
+			<h2>{{ nameTwo}}</h2>
+		</div>
+		<script type="text/javascript">
+			var vm  = new Vue({
+				el:"#app",
+				data:{
+					name:"zhoujian",
+					nameTwo:""
+				},
+				computed:{
+					computedOne:{
+						get:function(){
+							console.log("===========")
+							this.nameTwo = "zj"
+						},
+						
+						set:function(val){
+							this.name = val
+						}
+					}
+				}
+			})
+			
+			// 这里测试的方式是使用vm.computedOne的方式，get方法 没有参数不需要
+			// set方法有参数   vm.computed = "参数"
+		</script>
+	</body>
+</html>

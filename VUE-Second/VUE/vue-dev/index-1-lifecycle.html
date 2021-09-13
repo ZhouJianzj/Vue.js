@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{msg}}
+			<div v-if="isShow">show</div>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					msg:"lifecycle",
+					isShow:"ture"
+				},
+				// 在实例初始化之后,进行数据侦听和事件/侦听器的配置之前同步调用。
+				beforeCreate:function(){
+					console.group("beforceCreate==================")
+					console.log("%c%s","color:green","el  :  " + this.$el)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 被配置完毕：数据侦听、计算属性、方法、事件/侦听器的回调函数。然而，挂载阶段还没开始
+				created:function(){
+					console.group("created==================")
+					console.log("%c%s","color:green","el  :  " + this.$el)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 在挂载开始之前被调用
+				beforeMount:function(){
+					console.group("beforeMount==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 实例被挂载后调用
+				mounted:function(){
+					console.group("Mounted==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 数据更新之后，DOM更新之前执行的
+				beforeUpdate:function(){
+					console.group("beforceUpdate==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 视图更新完成之后执行的
+				updated:function(){
+					console.group("updated==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 实例销毁之前调用。在这一步，实例仍然完全可用。
+				beforeDestroy:function(){
+					console.group("beforeDestroy==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				},
+				// 实例销毁后调用。该钩子被调用后，对应 Vue 实例的所有指令都被解绑，所有的事件监听器被移除，所有的子实例也都被销毁。
+				destroyed:function(){
+					console.group("destroy==================")
+					console.log("%c%s","color:green","el  :  " + this.$el.innerHTML)
+					console.log("%c%s","color:green","data  :  " + this.$data)
+					console.log("%c%s","color:green","msg  :  " + this.msg)
+				}
+			})
+			vm.msg = "changed"
+			vm.isShow = "false"
+			vm.$destroy()
+			
+		</script>
+	</body>
+</html>

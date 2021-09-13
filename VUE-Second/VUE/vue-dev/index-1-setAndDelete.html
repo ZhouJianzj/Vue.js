@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{ id }}</p>
+			<p>{{ name }}</p>
+			<p>{{ address }}</p>
+			<button type="button" @click="doDo()">click</button>
+			
+		</div>
+		<script type="text/javascript">
+		var student = {
+			id:"007",
+			name:"studentOne",
+			address:""
+		}
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					id:"007",
+					name:"studentOne",
+					address:""
+				},
+				methods:{
+					doDo:function(){
+						this.$set(this,"address","nanjing")
+					}
+				}
+			})
+			// vm.$set(student,"address","student007")
+			console.log(student.name)
+			
+		</script>
+		
+	</body>
+</html>

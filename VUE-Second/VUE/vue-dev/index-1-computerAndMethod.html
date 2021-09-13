@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{ message }}</p>
+			<button @click="Two()">changeTwo</button>
+			
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					message:"hello"
+				},
+				computed:{
+					One:function(){
+						this.message.split('').reverse().join('')
+						console.log(this.message)
+						console.log(new Date() + "========> 计算属性")
+					}
+				},
+				methods:{
+					Two:function(){
+						this.message = "zhoujian"
+						console.log(this.message)
+						console.log(new Date() + "==========> 方法属性")
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

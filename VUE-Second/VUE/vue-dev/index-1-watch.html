@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript">
+			
+		</script>
+	</head>
+	<body>
+		<div id="app">
+			<!-- 修除前后的空格，中间的空格有多个的时候会修剪为一个 -->
+			<input type="text" v-model.trim ="inputOne" />{{inputOne}}<br>
+			<!-- 给输入的转换成number类型，转换不了就返回原始的输入值 -->
+			<input type="text" v-model.number ="inputTwo" />{{inputTwo}}<br>
+			<!-- 当输入完成离开输入框的时候才改变model的数据 -->
+			<input type="text" v-model.lazy ="inputThree" />{{inputThree}}<br>
+			
+			<button type="button" v-on:[one].exact = "One()">buttonOne</button>
+			<button type="button" @[two] = "Two()">buttonTwo</button>
+			<!-- 这种方式不可以 -->
+			<input type = "text" @keydown.[three] = "Three()" >
+			
+			<input type="text" v-on:keyup.enter.exact = "Three()"/>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					inputOne:"请输入",
+					one:"click",
+					two:"click",
+					three:"enter",
+					inputThree:"",
+					inputTwo:""
+				},
+				// 这里的数据监听的方法名字必须要和监听的属性名字一样的
+				watch:{
+					inputOne:function(){
+						console.log(this.inputOne)
+					},
+					inputTwo:function(){
+						console.log(this.inputTwo)
+					},
+					inputThree:function(){
+						console.log(this.inputThree)
+					}
+				},
+				methods:{
+					One:function(){
+						console.log("One+++++++++++++")
+					},
+					Two:function(){
+						console.log("Two+++++++++++++")
+					},
+					Three:function(){
+						console.log("Three+++++++++++++")
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
