@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<span v-once>{{ msg }}</spn><button type="button" @click="once()">v-once</button><br>
+			
+			<span>{{ hello }}</span><button type="button" @click="reverse(hello)">reverse</button>
+			<span>{{ helloOne }}</span>
+			<p v-html="html"></p>
+			
+			<!-- <span v-bind:class="{'color':iscolor,active:isSize}">color</span> -->
+			
+			<!-- <div class="color" v-bind:class="class">sad</div> -->
+		<!-- 	
+			<p>{{ falg ? 1 +"--true" : 2 + "--false"}}</p>
+			<p :class="['color']">red</p> -->
+			
+			<!-- <p>{{do}}</p> -->
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				msg:"hello!",
+				html:"<h1 style='color: red;'>html</h1>",
+				falg:true,
+				hello:"hello",
+				helloOne:"",
+				do:"change"
+			},
+			methods:{
+				// 改变v-once绑定的数据，改变不了
+				once:function(){
+					this.msg = "world!"
+				},
+				reverse:function(hello){
+					console.log(hello)
+					console.log(hello.split('').reverse().join(''))
+					
+					console.log("============================")
+					console.log(this.hello)
+					console.log(this.hello.split('').reverse().join(''))
+					
+				},
+				
+				
+			}
+		})
+		
+	
+		
+	</script>
+	<style>
+		.color{
+			color: red;
+		}
+		.back{
+			background-color: green;
+		}
+	</style>
+</html>
