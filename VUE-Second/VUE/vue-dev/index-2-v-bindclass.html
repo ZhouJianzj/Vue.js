@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<p v-text="text"></p>
+			<!-- class和style的样式渲染 -->
+			<span v-bind:class="{color:iscolor,size:issize}">color/size</span><br>
+			<!-- 使用对象 -->
+			<span v-bind:class="style">color/size</span><br>
+			<!-- 使用数组 -->
+			<span v-bind:class="[aiscolor,aissize]">color/size</span><br>
+			<!-- 链接 -->
+			<a v-bind:href="href">百度</a>
+			<!-- 新特性 2.6.0-->
+			<p v-bind:[attribute]="url">color</p>
+			<button type="button" @[event]="onclick">click</button>
+			<!-- v-html -->
+			<div v-html="html"></div>
+			<!-- 使用三元表达式 -->
+			<p>{{ falg? "istrue":"isfalse"}}</p><br>
+			<!-- 只能有一个表达式-->
+			<p>{{ hello.split('').reverse().join('')}}</p>
+			
+			
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				text:"helloworld!",
+				iscolor:true,
+				issize:true,
+				
+				style:{
+					color:true,
+					size:true
+				},
+				
+				aiscolor:"color",
+				aissize:"size",
+				
+				href:"http://www.baidu.com",
+				
+				attribute:"href",
+				url:"hhtp://www.baidu.com",
+				
+				html:"<h1 style='color: red;'>html</h1>",
+				
+				falg:true,
+				
+				hello:"hello!",
+				event:"click"
+			},
+			methods:{
+				onclick:function(){
+					alert("====")
+				}
+				}
+			}
+		)
+	
+		
+	</script>
+	<style type="text/css">
+		.color{
+			color: #0000FF;
+		}
+		.size{
+			size: a3;
+		}
+	</style>
+</html>
