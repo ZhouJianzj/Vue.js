@@ -13,8 +13,9 @@
 		<p>Message is: {{ message }}</p>
 		
 		<textarea v-model="message2" placeholder="add multiple lines"></textarea>
-		<p style="white-space: pre-line;">{{ message2 }}</p>
+		<p style="white-space: pre-line;">textarea is:{{ message2 }}</p>
 		<br />
+		
 		<!-- 展示的是给多选框绑定数据的，接收的时候需要使用一个数组接受 -->
 		<div style="margin-top:20px;">
 			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
@@ -26,6 +27,7 @@
 			<br>
 			<span>Checked names: {{ checkedNames }}</span>
 		</div>
+		
 		<!-- 展示的单选框的数据绑定 -->
 		<div style="margin-top:20px;">
 			<input type="radio" id="one" value="One" v-model="picked">
@@ -36,16 +38,39 @@
 			<br>
 			<span>Picked: {{ picked }}</span>
 		</div>
+		
 		<!-- 展示数据提交 -->
 		<button type="button" @click="submit">提交</button>
 		<!-- 展示的是下拉列表的选择，selected将不会奏效,只用改变data中对应model绑定的数值 -->
 		<select name="name" v-model="selects">
 			<option value="17">17</option>
-			<option value="18" selected="selected">18</option>
+			<option value="18" >18</option>
 			<option value="19">19</option>
 			<option value="20">20</option>
 		</select><br>
 		<span>select:{{selects}}</span>
+		<br>
+		
+		
+		<!-- v-for arrag-number -->
+		<div >
+			<select >
+				<option v-for="array,index in arrays":key=index value="index">{{array}}</option>
+			</select>
+			
+		</div>
+		<!-- v-for arrag-object -->
+		<div >
+			
+				<ul v-for="object,index in arrayObject":key=index >
+					<li>索引：{{index}} ---> id：{{object.id}} ---> name:{{object.name}}</li>
+				</ul>
+			
+			
+		</div>
+		<div id="">
+			<p v-for="count in 10">{{count}}</p>
+		</div>
 	</div>
 	
 </div>
@@ -53,12 +78,21 @@
 var vm = new Vue({
 	el : "#app",
 	data : {
-		selects:"",
+		selects:"18",
 		message : "test",
 		message2 :"hi",
 		// 赋默认值的时候会自动的勾选单选框和多选框 
 		checkedNames : ['Jack', 'John'],
-		picked : "Two"
+		picked : "Two",
+		
+		arrays:[0,1,2,3,4],
+		arrayObject:[
+			{id:1,name:"jack"},
+			{id:1,name:"jack"},
+			{id:1,name:"jack"},
+			{id:1,name:"jack"}
+		],
+		10:[0,1,2,3]
 	},
 	methods: {
 		submit : function () {
