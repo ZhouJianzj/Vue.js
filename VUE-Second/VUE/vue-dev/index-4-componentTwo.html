@@ -8,28 +8,29 @@
 	<body>
 		
 		<div id="app">
-			<input type="text" v-model="msg"/>{{msg}}
+			
+			<child></child>
+			
 		</div>
 		
 	</body>
 	<script type="text/javascript">
-	
+	var child = {
+		template:'<h1>hello</h1>'
+	}
 		var vm = new Vue({
 			el:"#app",
 			data:{
-				msg:""
+				
 			},
 			methods:{
 				
-				}
+			},
+			components:{
+				 child
 			}
-		)
+		})
 	
 		
 	</script>
-	<style type="text/css">
-		.code{
-			display: d;
-		}
-	</style>
 </html>

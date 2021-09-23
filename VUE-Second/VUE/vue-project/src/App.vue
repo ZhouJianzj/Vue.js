@@ -1,12 +1,20 @@
 <template>
   <div id="app">
     <router-view/>
+    <div>
+      <mycomponent></mycomponent>
+    </div>
   </div>
+  
 </template>
 
 <script>
+ import mycomponent from "./components/mycomponent"
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    mycomponent
+  }
 }
 </script>
 

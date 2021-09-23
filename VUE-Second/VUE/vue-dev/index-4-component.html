@@ -8,16 +8,30 @@
 	<body>
 		
 		<div id="app">
-			<input type="text" v-model="msg"/>{{msg}}
+			<mycomponent v-bind:value="value"></mycomponent>
+		
 		</div>
 		
 	</body>
 	<script type="text/javascript">
 	
+		Vue.component("mycomponent",{
+			props:['value'],
+			data:function(){
+				return{
+					show:"zj"
+				}
+			},
+			template:'\
+			<h1>hello{{ value }}--------{{show}}</h1>',
+		
+		
+			
+		})
 		var vm = new Vue({
 			el:"#app",
 			data:{
-				msg:""
+				value:"world!"
 			},
 			methods:{
 				
@@ -27,9 +41,4 @@
 	
 		
 	</script>
-	<style type="text/css">
-		.code{
-			display: d;
-		}
-	</style>
 </html>

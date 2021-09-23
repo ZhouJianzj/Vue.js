@@ -8,16 +8,18 @@
 	<body>
 		
 		<div id="app">
-			<input type="text" v-model="msg"/>{{msg}}
+			
+			<input v-if="msg === 'A' " type="text"   v-bind:value="msg"/>
+			<input v-else-if="msg == 'B'" type="text"v-bind:value="msg" />
+			<input v-else="msg == 'c'" type="text" v-bind:value="msg" />
 		</div>
 		
 	</body>
 	<script type="text/javascript">
-	
 		var vm = new Vue({
 			el:"#app",
 			data:{
-				msg:""
+				msg:"C"
 			},
 			methods:{
 				
@@ -27,9 +29,4 @@
 	
 		
 	</script>
-	<style type="text/css">
-		.code{
-			display: d;
-		}
-	</style>
 </html>

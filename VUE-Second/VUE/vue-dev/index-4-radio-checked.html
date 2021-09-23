@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<div >
+				<input type="radio" name="one" value="one" v-model="pick" />
+				<label for="one">one</label>
+				<input type="radio" name="two" value="two" v-model="pick"/>
+				<label for="two">two</label>
+				----{{pick}}
+			</div>
+			
+			<div >
+				<input type="checkbox" name="" value="1" v-model="checkes" />
+				<label>1</label>
+				<input type="checkbox" name="" value="2" v-model="checkes" />
+				<label>2</label>
+				<input type="checkbox" name="" value="3" v-model="checkes"/>
+				<label>3</label>
+				-----{{checkes}}
+			</div>
+			<div >
+				<select v-model="option">
+					<option value ="1">1</option>
+					<option value ="2">2</option>
+					<option value ="3">3</option>
+				</select>
+				------{{option}}
+			</div>
+			<div >
+				<select >
+					<option value="index + 1" v-for="item,index in array">{{item}}
+					-------{{index + 1}}----------{{item}}
+					</option>
+				</select>
+				
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				pick:"one",
+				checkes:['1','2'],
+				option:"",
+				array:[1,2,3,4,5]
+			},
+			methods:{
+				
+				}
+			}
+		)
+	
+		
+	</script>
+</html>
