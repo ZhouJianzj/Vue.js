@@ -1,15 +1,24 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <div >
+    <h1>{{ msg }}</h1>
+    <span>{{name}}</span>
+  </div>
+  
+
+
 </template>
 
 <script>
   export default{
     name:"mycomponent",
+    props:['name'],
     data(){
       return{
-        msg:"zhoujian"
+        msg:"zhoujian",
+
       }
     }
+
   }
 </script>
 

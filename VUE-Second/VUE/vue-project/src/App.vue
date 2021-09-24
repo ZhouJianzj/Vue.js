@@ -1,21 +1,33 @@
 <template>
   <div id="app">
     <router-view/>
+
     <div>
-      <mycomponent></mycomponent>
+
+      
+      <mycomponent v-bind:name="name"></mycomponent>
     </div>
   </div>
-  
+
 </template>
 
 <script>
  import mycomponent from "./components/mycomponent"
-export default {
+
+ export default {
   name: 'App',
   components:{
     mycomponent
+  },
+  data(){
+    return{
+      name:"zj"
+    }
   }
+
 }
+
+
 </script>
 
 <style>
