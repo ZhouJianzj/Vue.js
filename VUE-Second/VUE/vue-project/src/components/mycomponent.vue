@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <span>{{name}}</span>
   </div>
-  
+
 
 
 </template>
