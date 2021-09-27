@@ -13,6 +13,7 @@
 				<todo-li slot="todo-li" v-bind:li="litext"></todo-li>
 			</todo>
 		</div>
+		
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		
 		<script type="text/javascript">
@@ -37,13 +38,15 @@
 				template:"<li>{{li}}</li>"
 			})
 			
-			new Vue({
+			var vm = new Vue({
 				el:"#app",
 				data:{
 					title:"技术栈",
 					litext:"java"
 				}
 			})
+			console.log(vm.$slots)
+			
 		</script>
 		
 		<!-- 第二个自定义组件的插槽 -->

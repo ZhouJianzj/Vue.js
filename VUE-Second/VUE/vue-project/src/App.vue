@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <router-view/>
-
+    <div >
+         <button @click="method1">page1</button>
+         <button @click="method2">page2</button>
+         <router-view></router-view>
+    </div>
     <div>
-
-      
       <mycomponent v-bind:name="name"></mycomponent>
     </div>
   </div>
@@ -23,6 +24,14 @@
     return{
       name:"zj"
     }
+  },
+  methods:{
+    method1(){
+          this.$router.push('/page1');
+        },
+        method2(){
+          this.$router.push('/page2');
+        }
   }
 
 }

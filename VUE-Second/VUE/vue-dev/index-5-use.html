@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		<div id="app" >
+			<input  />
+			
+		</div>
+		<script type="text/javascript">
+			var vm  =  new Vue({
+				el:"#app"
+			})
+			
+			let myPlugin={}
+		
+
+			myPlugin.install = function(Vue,options){
+				console.log(options)
+			}
+			
+			Vue.use(myPlugin,{someoptions:true})
+			
+			
+		</script>
+	</body>
+</html>

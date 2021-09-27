@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<body>
+		
+		<div id="app">
+			<one v-bind:title="title" v-bind:one1 = "one1" v-bind:one2 ="one2"></one>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+	Vue.config.productionTip = false
+	Vue.config.silent = false
+	Vue.component('one',{
+		props:['title'],
+		// 使用attrs就不需要在父组件中props中书写子组件需要的属性了
+		template:"<div><h1>{{ title }}</h1><two v-bind ='$attrs'></two></div>"
+	})
+	Vue.component('two',{
+		// 父组件使用过的属性子组件就不可以使用了
+		template:"<span>{{$attrs.one1}}------>{{$attrs.one2}}------>{{$attrs.title }}</span>"
+	})
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				title:"VUE",
+				one1:1,
+				one2:2
+			},
+			methods:{
+				
+			}
+			
+		})
+		console.log(vm.$el)
+	
+		
+	</script>
+</html>
