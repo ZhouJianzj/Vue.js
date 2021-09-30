@@ -3,6 +3,8 @@
     <div >
          <button @click="method1">page1</button>
          <button @click="method2">page2</button>
+         <router-link to="/one"><button>one</button></router-link>
+         <router-link to="/two"><button>two</button></router-link>
          <router-view></router-view>
     </div>
     <div>
