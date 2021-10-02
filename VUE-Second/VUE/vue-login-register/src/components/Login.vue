@@ -2,6 +2,7 @@
 
 <div style="width:calc(30%); margin-top: 10%; margin-left: 30%;">
 	<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+		
 	  <el-form-item label="用户名" prop="userName">
 	    <el-input type="text" v-model="ruleForm.userName" autocomplete="off"></el-input>
 	  </el-form-item>
