@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="vue-router.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<!-- 使用这样的方式，表示就不会有路由记录当使用$router.go()的时候就不可以回退 -->
+			<router-link :to="{path:'/page'}" replace>replace跳转</router-link>
+			<router-link to="/show">正常跳转</router-link>
+			<button type="button" @click="goback">go</button>
+			<router-view></router-view>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var page = {
+			template:"<div><h1>replace</h1></div>"
+		}
+		var show= {
+			template:"<div><h1>show</h1></div>"
+		}
+		var routes = [
+			{
+				path:'/page',
+				component:page
+			},
+			{
+				path:'/show',
+				component:show
+			}
+			
+		]
+		var router = new VueRouter({
+			routes
+		})
+		var vm = new Vue({
+			el:"#app",
+			router,
+			data:{
+				
+			},
+			methods:{
+				goback(){
+					this.$router.go(-1)
+				}
+			}
+			
+		})
+	
+		
+	</script>
+</html>
