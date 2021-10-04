@@ -1,19 +1,19 @@
 <template>
 
 <div style="width:calc(30%); margin-top: 10%; margin-left: 30%;">
-	<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+	<el-form :model="formData" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 		
 	  <el-form-item label="用户名" prop="userName">
-	    <el-input type="text" v-model="ruleForm.userName" autocomplete="off"></el-input>
+	    <el-input type="text" v-model="formData.userName" autocomplete="off"></el-input>
 	  </el-form-item>
 	  
 	  <el-form-item label="密码" prop="checkPass">
-	    <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+	    <el-input type="password" v-model="formData.checkPass" autocomplete="off"></el-input>
 	  </el-form-item>
 	  
 	  <el-form-item>
 		  
-	    <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+	    <el-button type="primary" @click="submitForm('ruleForm',formData)">提交</el-button>
 	    <el-button @click="resetForm('ruleForm')">重置</el-button>
 		<el-button @click="push()">注册</el-button>
 		
@@ -31,11 +31,12 @@
         if (value === '') {
           callback(new Error('请输用户名'));
         } else {
-         
-          }
-          callback();
+			callback();
+        }
+          
         
       };
+	  // 自定义的验证器，指定的参数 
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -44,13 +45,14 @@
         }
       };
       return {
-        ruleForm: {
+        formData: {
           userName: '',
           checkPass: ''
         },
 		
         rules: {
           userName	: [
+			  //validator： 验证器，validateUserName：自定义的验证器，trigger: 'blur'：表示的是鼠标失去焦点
             { validator: validateUserName, trigger: 'blur' }
           ],
           checkPass: [
@@ -60,10 +62,11 @@
       };
     },
     methods: {
-      submitForm(formName) {
+      submitForm(formName,formData) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+			console.log(formData.userName)
           } else {
             console.log('error submit!!');
             return false;

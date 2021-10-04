@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="vue-router.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<router-link to="/one?id=100">show-query</router-link>
+			<router-link to="/two/100/zhoujian">show-params</router-link>
+			<router-link to="/one/oneOne">show-children</router-link>
+			<button @click="buttonQuery">跳转-query</button>
+			<button @click="buttonParams">跳转-params</button>
+			
+			<router-view></router-view>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+	
+	// 组件
+		var one = {
+			// 需要注意的是这里使用的是$route
+			template:"\
+			<div><h1>id:{{this.$route.query.id}}</h1>\
+			<router-view></router-view>\
+			</div>\
+			"
+		}
+		var two = {
+			// 需要注意的是这里使用的是$route
+			template:"<div><h1>id:{{this.$route.params.id}}--->name:{{this.$route.params.name}}</h1></div>"
+		}
+		var oneOne = {
+			// 需要注意的是这里使用的是$route
+			template:"<div><h1>children</h1></div>"
+		}
+		var buttonQuery = {
+			// 需要注意的是这里使用的是$route
+			template:"<div><h1>......-->跳转-query---->name:{{this.$route.query.name}}</h1></div>"
+		}
+		var buttonParams= {
+			// 需要注意的是这里使用的是$route
+			template:"<div><h1>......-->跳转-params---->name:{{this.$route.params.name}}</h1></div>"
+		}
+	
+		// 多个route组成routes数组
+		var routes = [
+			// 单个route
+			{
+				// 嵌套式的路由
+				path:"/one",
+				component:one,
+				children:[
+					{
+						// 子路由这里不加/
+						path:"oneOne",
+						component:oneOne
+					}
+				]
+			},
+			{
+				path:"/two/:id/:name",
+				component:two
+			},
+			{
+				// 编程式query传参方式的route
+				path:"/buttonQuery",
+				component:buttonQuery
+			},
+			{
+				// 编程式params传参方式的route
+				path:"/buttonParams",
+				name:"params",
+				component:buttonParams
+			}
+		
+			
+			
+		]
+		// 创建router
+		var router = new VueRouter({
+			routes
+		})
+		var vm = new Vue({
+			el:"#app",
+			router,
+			data:{
+				user:{
+					id:001,
+					name:"zhoujian"
+				}
+				
+			},
+			methods:{
+				buttonQuery:function(){
+					// 使用query的方式传递参数的时候需要和path配置一起使用
+					this.$router.push({
+						path:"/buttonQuery",
+						query:{
+							name:"admin"
+						}
+					})
+				},
+				buttonParams:function(){
+					// 使用params的方式传递参数的时候需要配合route的name一起使用
+					this.$router.push({
+						name:"params",
+						params:{
+							name:"zhoujian"
+						}
+					})
+				}
+			
+			}
+			
+		})
+	
+		
+	</script>
+</html>
