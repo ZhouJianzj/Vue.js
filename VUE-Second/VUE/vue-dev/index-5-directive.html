@@ -8,7 +8,7 @@
 	<body>
 		
 		<div id="app">
-			<input v-focus/>
+			<input v-focus="true"/>
 		</div>
 		
 	</body>
@@ -25,8 +25,9 @@
 		// 只调用一次，指令与元素解绑时调用。
 		unbind: function () {},
 		// 被绑定元素插入父节点时调用 
-		inserted:function(el){
+		inserted:function(el,binding){
 			el.focus();
+			console.log(binding.value)
 			
 		}
 	})

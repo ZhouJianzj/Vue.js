@@ -10,7 +10,8 @@
 		<div id="app">
 			
 			<child></child>
-			
+			<!-- 外部方法绑定到内部组件方法 -->
+			<two @clicknow="test"></two>
 		</div>
 		
 	</body>
@@ -19,13 +20,33 @@
 	var child = {
 		template:'<h1>hello</h1>'
 	}
+	
+	// 内部主键
+	Vue.component('two',{
+		data(){
+			return{
+				name:"zj"
+			}
+		},
+		methods:{
+			// 内部的方法，指定发出的方法名字和方法的参数
+			doClick(){
+				this.$emit('clicknow',this.name)
+				
+			}
+		},
+		template:"<button @click='doClick'>{{name}}</button>"
+	})
 		var vm = new Vue({
 			el:"#app",
 			data:{
-				
+				msg:""
 			},
 			methods:{
-				
+				// 绑定到内部方法的外部方法
+				test(name){
+					alert(name)
+				}
 			},
 			// 局部组件的注册
 			components:{
