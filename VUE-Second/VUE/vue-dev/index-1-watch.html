@@ -36,8 +36,8 @@
 				},
 				// 这里的数据监听的方法名字必须要和监听的属性名字一样的
 				watch:{
-					inputOne:function(){
-						console.log(this.inputOne)
+					inputOne:function( newValue,oldValue){
+						console.log(newValue  + "-----" + oldValue)
 					},
 					inputTwo:function(){
 						console.log(this.inputTwo)

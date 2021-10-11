@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			计算器
+			<div>
+				<label>请输入</label>
+				<input type="text" v-model="input" />
+				<select v-model="yuansuan" >
+					<option value="+">+</option>
+					<option value="-">-</option>
+					<option value="*">*</option>
+					<option value="/">/</option>
+				</select>
+				<input type="text" v-model="output" @keydown.enter="yuanSuanMethod()"  />
+				<span>=</span>
+				<input type="text" disabled="disabled" v-model="result" />
+			</div>
+			<br>
+			比较大小
+			<div >
+				<input type="text"  v-model="num1"/>
+				<input type="text"  v-model="num2"/>
+				<span >{{ comparet }}</span>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				input:0,
+				output:0,
+				result:0,
+				yuansuan:'+',
+				num1:"",
+				num2:"",
+				comparet:""
+				
+			},
+			methods:{
+				yuanSuanMethod(){
+					if(this.yuansuan == "+"){
+						this.result = parseInt(this.input) + parseInt(this.output)}  
+					if(this.yuansuan == "-"){
+						this.result = this.input - this.output
+					}
+					if(this.yuansuan == "*"){
+						this.result = this.input * this.output
+					}
+					if(this.yuansuan == "/"){
+						this.result = this.input / this.output
+					}
+				}
+			},
+			watch:{
+				num2(){
+					if(this.num1 > this.num2){
+						this.comparet =  this.num1  + "大于" + this.num2
+					}else if(this.num1 = this.num2){
+						this.comparet =  this.num1  + "等于" + this.num2
+					}else{
+						this.comparet =  this.num1  + "小于" + this.num2
+					}
+				},
+				num1(){
+					if(this.num1 > this.num2){
+						this.comparet =  this.num1  + "大于" + this.num2
+					}else if(this.num1 = this.num2){
+						this.comparet =  this.num1  + "等于" + this.num2
+					}else{
+						this.comparet =  this.num1  + "小于" + this.num2
+					}
+				}
+			}
+			
+			
+		})
+	
+		
+	</script>
+</html>

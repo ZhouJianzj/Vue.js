@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			{{ msg | msgFilter}}
+			<div >
+				<input type="text" v-bind:value="msg | msgFilterTwo"/>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				msg:'zhoujian'
+			},
+			methods:{
+				
+			},
+			filters:{
+				//第一种实现方是通过插值表达式的方式
+				// 这里的参数会根据 |管道符传递过来
+				msgFilter(value){
+					return value.toUpperCase()
+				},
+				
+				// 第二种方式是通过v-bind的方式实现的
+				msgFilterTwo(value){
+					return value.toUpperCase()
+				}
+			}
+			
+		})
+	
+		
+	</script>
+</html>

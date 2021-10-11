@@ -3,13 +3,82 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<script src="vue.js"></script>
 	</head>
 
 	<body>
 		
 		<div id="app">
-			<h1>周健</h1>
+			
+			<button type="button" @click="del()">删除数据</button>
+			<button type="button" @click="add()">添加数据</button>
+			<table border="1" width="50%" style="border-collapse: collapse;">
+				
+				<tr>
+					<th>学号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>地址</th>
+				</tr>
+				<tr v-for="item in array" >
+					<td>{{ item.id }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.sex }}</td>
+					<td>{{ item.address }}</td>
+				</tr>
+			</table>
 		</div>
+		
+		<script type="text/javascript">
+			
+			var vm =  new Vue({
+				el:"#app",
+				data:{
+					array:[
+						{
+							id:"001",
+							name:"zhoujian",
+							sex:"男",
+							address:"nanjing"
+						},
+						{
+							id:"001",
+							name:"zhoujian",
+							sex:"男",
+							address:"nanjing"
+						},
+						{
+							id:"001",
+							name:"zhoujian",
+							sex:"男",
+							address:"nanjing"
+						},
+						{
+							id:"001",
+							name:"zhoujian",
+							sex:"男",
+							address:"nanjing"
+						}
+					]
+					
+					
+					
+				},
+				methods:{
+					add(){
+						this.array.push({
+							id:"001",
+							name:"zhoujian",
+							sex:"男",
+							address:"nanjing"
+						})
+					},
+					del(){
+						this.array.pop()
+					}
+				}
+			})
+		</script>
 		
 	</body>
 
