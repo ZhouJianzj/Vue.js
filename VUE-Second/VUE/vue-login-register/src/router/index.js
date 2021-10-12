@@ -11,11 +11,13 @@ const routes = [
 	},
 	{
 		path:'/login',
-		component:Login
+		component:Login,
+		meta:{title:"登录"}
 	},
 	{
 		path:'/register',
-		component:Register
+		component:Register,
+		meta:{title:"注册"}
 	}
 	
 ]
@@ -24,6 +26,12 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+})     
+         // 改变每一个使用history模式的路由跳转之后显示的网页标题
+router.beforeEach(to,from,next){
+	if(to.meta.title){
+		document.title = to.meta.title
+	}
+}
 
 export default router

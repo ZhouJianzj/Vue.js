@@ -7,12 +7,13 @@
 		<script src="vue-router.js" type="text/javascript" charset="UTF-8"></script>
 	</head>
 	<body>
-		<div id="app" >
+		<div id="app"  >
 			<!-- <router-view name="left"></router-view> -->
 			<router-view ></router-view>
 			<div class="container">
 				<router-view name="left"></router-view>
 				<router-view name="main"></router-view>
+				<router-view name="zj"></router-view>
 			</div>
 			
 		
@@ -32,13 +33,18 @@
 			// 需要注意的是这里使用的是$route
 			template:"<div class = 'main'>main</div>"
 		}
+		var zj = {
+			// 需要注意的是这里使用的是$route
+			template:"<div  style='background-color: #000000;'>zj</div>"
+		}
 		var routes = [
 			{
 				path:'/',
 				components:{
 					'default':header,
 					'left':sidebar,
-					'main':main
+					'main':main,
+					'zj':zj
 				}
 			}
 		]

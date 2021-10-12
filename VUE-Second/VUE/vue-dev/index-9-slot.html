@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
+	<body>
+		
+		<div id="app">
+			<first>
+				<one slot="one"></one>
+				<two slot="two"></two>
+			</first>
+		</div>
+		<template id="first">
+			<div >
+				<slot name="one"></slot>
+				<slot name="two"></slot>
+			</div>
+		</template>
+		<template id="one">
+			<div>
+				<h1>导航栏一</h1>
+			</div>
+		</template>
+		<template id="two">
+			<div>
+				<h1>导航栏二</h1>
+			</div>
+		</template>
+		
+		
+		
+	</body>
+	<script type="text/javascript">
+	
+		Vue.component('first',{
+			template:'#first'
+		})
+		Vue.component("one",{
+			template:"#one"
+		})
+		Vue.component("two",{
+			template:"#two"
+		})
+		var vm = new Vue({
+			el:"#app"
+		})
+	
+		
+	</script>
+</html>
