@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="../VUE-Second/VUE/vue-dev/vuex.js"></script>
+	<body>
+		
+		<div id="app">
+			<one ></one>
+		</div>
+		<template id="one">
+			<div >
+				<button type="button" @click="add()">+</button>
+				<input type="text"  :value="this.$store.state.num"/>
+				<two></two>
+			</div>
+		</template>
+		<template id="two">
+			<div >
+				<input type="text"  :value="this.$store.state.num"/>
+				<three></three>
+			</div>
+		</template>
+		<template id="three">
+			<div >
+				<input type="text"  :value="this.$store.state.num"/>
+			</div>
+		</template>
+		
+	</body>
+	<script type="text/javascript">
+		var store = new Vuex.Store({
+			state:{
+				num:0
+			},
+			mutations:{
+				add1:function(){
+					this.state.num++
+				},
+				sub1:function(){
+					this.state.num--
+				}
+			}
+		})
+		
+		var vm = new Vue({
+			store,
+			el:"#app",
+		
+			components:{
+				"one":{
+					template:"#one",
+					methods:{
+						add:function(){
+							// 这样的方式去实现共享数据的修改当多个组件修改的时候出现
+							//错误我的时候不好判定是哪一个出现的错误
+							// this.$store.state.num++
+							// 使用commit方法调用store中mutation属性中的方法可以一目了然的知道
+							//哪一个方法调用方了数据修改
+							this.$store.commit('add1')
+						}
+					},
+					components:{
+						"two":{
+							template:"#two",
+							components:{
+								"three":{
+									template:"#three"
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+		
+	
+		
+	</script>
+</html>

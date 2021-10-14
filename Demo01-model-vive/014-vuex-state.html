@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="../VUE-Second/VUE/vue-dev/vuex.js"></script>
+	<body>
+		<!-- 
+			vueX是为了实现父子，兄弟组件之间参数传递的困难的
+			vuex直接是实现数据的共享，全局注册vuex，state相当于之前的data，state是共享的
+			把vuex实例store配置到vue实例的属性中去，子组件使用this.$store.state.canshuname的
+			方式就可使用了
+		 
+		 -->
+		<div id="app">
+			<parent>
+				<child></child>
+			</parent>
+		</div>
+		<template id="parent">
+			<div >
+				{{this.$store.state.msg}}
+				<child></child>
+			</div>
+			
+		</template>
+		<template id="child">
+			<div >
+				{{this.$store.state.msg}}
+				<son></son>
+			</div>
+		</template>
+		<template id="son">
+			<div >
+				{{this.$store.state.msg}}
+			</div>
+		</template>
+	</body>
+	<script type="text/javascript">
+		Vue.component('parent',{
+			template:"#parent",
+			components:{
+				"child":{
+					template:"#child",
+					components:{
+						"son":{
+							template:"#son"
+							
+						}
+					}
+				}
+			}
+		})
+		
+		var store = new Vuex.Store({
+			state:{
+				msg:"zhoujian"
+			}
+		})
+	var vm = new Vue({
+		el:"#app",
+		store
+	})
+		
+	</script>
+</html>

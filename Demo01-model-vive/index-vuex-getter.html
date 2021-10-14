@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="../VUE-Second/VUE/vue-dev/vuex.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		
+		<div id="app">
+			<one></one>
+		</div>
+		<template id="one">
+			<div >
+				<!-- getters方法类似于之前的computed方法 -->
+				{{this.$store.state.msg}}-----{{this.$store.getters.get}}
+			</div>
+		</template>
+	</body>
+	<script type="text/javascript">
+		var store = new Vuex.Store({
+			state:{
+				msg:"zhoujian"
+			},
+			mutations:{
+				
+			},
+			getters:{
+				get(state){
+					return state.msg = state.msg + ".com"
+				}
+			}
+		})
+		Vue.component('one',{
+			template:"#one"
+		})
+		var vm = new Vue({
+			el:"#app",
+			store,
+			data:{
+				
+			},
+			methods:{
+				
+			}
+			
+		})
+	
+		
+	</script>
+</html>

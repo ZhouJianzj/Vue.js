@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js"></script>
+		<script src="vue-router.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<one></one>
+		</div>
+		<template id="one">
+			<div  class="one" >
+				
+			</div>
+		</template>
+		<script type="text/javascript">
+		
+			var router = new VueRouter({
+				routes:[
+					{
+						path:"/",
+						component:one
+						
+					}
+				]
+			})
+		Vue.component('one',{
+			template:"#one"
+		})
+			var vm = new Vue({
+				el:"#app",
+				router,
+			})
+		</script>
+		
+	</body>
+	<style type="text/css">
+		.one{
+			background: #0066CC;
+			height: 500px;
+		}
+	</style>
+</html>
