@@ -50,7 +50,7 @@
 		  // },
 		  // 下面使用的是使用mapState方法一次性的获取多个状态
 		  computed:mapState({
-			  count:state =>state.count,
+			  count:state =>{return state.count},
 			  name:state=> state.name
 		  }),
 		  methods: {

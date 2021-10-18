@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../VUE-Second/VUE/vue-dev/vuex.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div >
+				{{this.$store.state.num}}
+			</div>
+			<button type="button" @click="doActAdd()">+</button>
+			<button type="button" @click="doActSub()">-</button>
+			<button @click="doTest()">test</button>
+		</div>
+		
+		<script type="text/javascript">
+			var vuex = new Vuex.Store({
+				state:{
+					num:0
+				},
+				actions:{
+					// context：表示的是上下文，可以获取到下面的，
+					// dispatch: ƒ, commit: ƒ, getters: {…}, state: {…}, rootGetters: {…}, …}
+					add(context,param){
+						console.log(context)
+						console.log(param)
+						console.log("==========================")
+						// 使用context中的mutations里面的方法,这里使用的是以对象方式传递
+						// context.commit('add')
+						context.commit({type:'add',name:"zhoujian"})
+					},
+					sub(context){
+						console.log(context.state)
+						context.state.num--
+					},
+					test(context,param){
+						console.log(param)
+					}
+				},
+				mutations:{
+					add(state,param){
+						state.num++
+						console.log(param)
+						console.log(param.name)
+					}
+					
+				}
+			})
+			
+			var vm = new Vue({
+				el:"#app",
+				store:vuex,
+				methods:{
+					// 演示的是调用actions中的方法
+					doActAdd(){
+						this.$store.dispatch('add','zhoujian')
+					},
+					doActSub(){
+						this.$store.dispatch('sub')
+					},
+					// 演示的是传递对象的方式
+					doTest(){
+						this.$store.dispatch({type:'test',name:'zhoujian'})
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

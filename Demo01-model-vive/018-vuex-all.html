@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="../VUE-Second/VUE/vue-dev/vuex.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		
+		<div id="app">
+			<input type="text" v-model="id"/><button @click="doSearch(id)">search</button>
+			<p>{{this.$store.getters.search}}</p>
+			<ul>
+				<li v-for="item,index in this.$store.state.items">{{item}}</li>
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var vuex = new Vuex.Store({
+			state:{
+				items:[
+					{id:1,text:'列表1'},
+					{id:2,text:'列表2'}
+				],
+				id:0
+			},
+			// 相当于computed，
+			getters:{
+				search:state =>{
+					// 这个方法通过比较items中的id是否等于state中的id，
+					// 如果等于了就数组中添加一个元素
+					return state.items.filter(item =>item.id == state.id)
+				}
+			},
+			mutations:{
+				search(state,id){
+					state.id = id
+					
+				}
+			}
+		})
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				id:1
+			},
+			store:vuex,
+			methods:{
+				doSearch(id){
+					this.$store.commit("search",id)
+				}
+			}
+			
+		})
+	
+		
+	</script>
+</html>

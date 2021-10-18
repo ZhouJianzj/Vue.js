@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../VUE-Second/VUE/vue-dev/vue.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../VUE-Second/VUE/vue-dev/vuex.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	
+	<body>
+		<div id="app">
+			<!-- {{this.$store.state.one.name1}} -->
+			{{this.$store.state.one.name}}
+		</div>
+		<script>
+		// 实现的是modules
+		// var moduleOne = {
+		// 	state:{
+		// 		name1:"zhou"
+		// 	}
+		// }
+		// var moduleTwo= {
+		// 	state:{
+		// 		name2:"jian"
+		// 	}
+		// }
+		// var store = new Vuex.Store({
+		// 	modules:{
+		// 		one:moduleOne,
+		// 		two:moduleTwo
+		// 	}
+			
+		// })
+		
+		// 实现是module的注册
+		var store = new Vuex.Store({})
+		store.registerModule("one",{//module的name为one
+			state:{
+				name:"zhoujian"
+			}
+		})
+		
+		var vm = new Vue({
+			el:"#app",
+			store:store
+		})
+		</script>
+	</body>
+</html>
