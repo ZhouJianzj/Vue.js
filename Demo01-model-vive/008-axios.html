@@ -63,6 +63,7 @@
 					// 链式的编程，get请求url，than然后得到响应数据，数据传递
 					axios.get("../Demo01-model-vive/json/json.json")
 					.then(response =>(this.info = response.data))
+					.then(function(err){console.log(err)})
 				}
 			})
 		</script>

@@ -27,6 +27,8 @@
 		// 被绑定元素插入父节点时调用 
 		inserted:function(el,binding){
 			el.focus();
+			//el表示的是指令所在的标签
+			console.log(el)
 			console.log(binding.value)
 			
 		}

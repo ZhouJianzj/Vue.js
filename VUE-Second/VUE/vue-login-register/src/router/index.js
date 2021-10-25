@@ -28,10 +28,10 @@ const router = new VueRouter({
   routes
 })     
          // 改变每一个使用history模式的路由跳转之后显示的网页标题
-router.beforeEach(to,from,next){
-	if(to.meta.title){
-		document.title = to.meta.title
-	}
-}
+// router.beforeEach(to,from,next){
+// 	if(to.meta.title){
+// 		document.title = to.meta.title
+// 	}
+// }
 
 export default router
