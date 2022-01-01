@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<p>{{m}}</p>
+    <button @click="clicked">update</button>
+</div>
+<script>
+    let app = new Vue({
+        el:"#app",
+        data:{
+            m:"zhoujian"
+        },
+        methods:{
+            clicked(){
+                this.m = "newValue"
+            }
+        }
+    })
+    console.log(app.$data.m == app.m)
+    console.log(app.$el == document.getElementById("app"))
+    app.$watch('m',function (newValue,oldValue){
+        console.log("newValue:" + newValue + "-------->oldValue:" + oldValue)
+    })
+</script>
+</body>
+</html>

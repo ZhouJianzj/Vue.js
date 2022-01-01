@@ -24,9 +24,11 @@
 			</div>
 			<br>
 			比较大小
+			
 			<div >
 				<input type="text"  v-model="num1"/>
 				<input type="text"  v-model="num2"/>
+				<input type="button" @click="but()" />
 				<span >{{ comparet }}</span>
 			</div>
 		</div>
@@ -58,28 +60,11 @@
 					if(this.yuansuan == "/"){
 						this.result = this.input / this.output
 					}
-				}
-			},
-			watch:{
-				num2(){
-					if(this.num1 > this.num2){
-						this.comparet =  this.num1  + "大于" + this.num2
-					}else if(this.num1 = this.num2){
-						this.comparet =  this.num1  + "等于" + this.num2
-					}else{
-						this.comparet =  this.num1  + "小于" + this.num2
-					}
 				},
-				num1(){
-					if(this.num1 > this.num2){
-						this.comparet =  this.num1  + "大于" + this.num2
-					}else if(this.num1 = this.num2){
-						this.comparet =  this.num1  + "等于" + this.num2
-					}else{
-						this.comparet =  this.num1  + "小于" + this.num2
-					}
-				}
-			}
+				but(){}
+				
+				
+			},
 			
 			
 		})

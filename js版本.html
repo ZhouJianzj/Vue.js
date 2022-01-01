@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选/全不选/反选</title>
+    <style>
+        tr{
+            text-align: center;
+        }
+    </style>
+  
+</head>
+<body>
+    <table id="tab" align="center" border="1" width="70%" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" />&nbsp;
+                    <button id="all">反选</button>
+                </th>
+                <th>分类ID</th>
+                <th>分类名称</th>
+                <th>分类概述</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox" name="ck">
+                </td>
+                <td>1</td>
+                <td>手机数码</td>
+                <td>手机数码类商品</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="ck">
+                </td>
+                <td>2</td>
+                <td>电脑办公</td>
+                <td>电脑办公类商品</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="ck">
+                </td>
+                <td>3</td>
+                <td>鞋靴箱包</td>
+                <td>鞋靴箱包类商品</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="ck">
+                </td>
+                <td>4</td>
+                <td>家居饰品</td>
+                <td>家居饰品类商品</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+	
+	<script type="text/javascript">
+	    
+			
+	
+	        document.getElementById("all").onclick = function(){
+	            //
+	            var flag = document.getElementById("all");
+
+	            var cks = document.getElementsByName("ck");
+			
+			
+	            for(var i=0;i<cks.length;i++){
+					var check =  cks[i].checked
+	                if(check){
+	                    cks[i].checked = false;
+	                }else{
+	                    cks[i].checked = true;
+	                }
+	            }
+	        }
+	
+	</script>
+</body>
+</html>
