@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <p>{{msgComputed}}</p>
+  <p>{{msgMethods()}}</p>
+
+  <p>{{nowComputed}}</p>
+<!--    computed中是需要计算的属性不是方法-->
+<!--    <button @click="nowComputed()">nowComputed</button>-->
+  <p>{{nowMethods()}}</p>
+    <button @click="nowMethods()">nowMethods</button>
+<!--    watch 中是需要监听的属性不是方法-->
+<!--    <button @click="msg()">msg</button>-->
+
+</div>
+<script>
+ let app = new Vue({
+     el: "#app",
+
+     data: {
+         msg: "zhoujian",
+         data: "zjzj",
+         date: "asdad"
+     },
+
+
+     //计算属性和正常的方法会监听data中的所有数据的变化，当data中的任意一个属性变化了都会再一次执行
+     computed: {
+         msgComputed: function () {
+             console.log("msgComputed :" + new Date().getMilliseconds());
+             return (this.msg.split('').reverse().join(''))
+         },
+         // {{nowComputed}}相当于调用nowComputed 的 getter方法
+         // nowComputed: function () {
+         //     console.log(Date.now())
+         //     return Date.now()
+         // }
+         nowComputed: {
+           get(){
+               console.log("getter method")
+               return new Date()
+           },
+           //  当给nowComputed赋值的时候会调用set方法
+           set(){
+               console.log("setter method")
+           }
+         },
+
+     },
+     methods: {
+         msgMethods() {
+             console.log("msgMethods :" + new Date().getMilliseconds());
+             return (this.data.split('').reverse().join(''))
+         },
+         nowMethods() {
+             console.log(Date.now())
+             return Date.now()
+         }
+     },
+     //也是一样的只要data中的任何一个数据变化都会触发这个函数
+     watch: {
+         msg: function () {
+             console.log("zhoujian")
+             return this.msg
+         }
+     }
+
+ });
+</script>
+</body>
+</html>
