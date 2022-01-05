@@ -9,20 +9,31 @@
 <div id="app">
   <ul>
       <li
-      v-for="item in msg" v-if="item != '2'">{{item}}</li>
+      v-for="item in msg">{{item}}</li>
   </ul>
-
+    <p>{{selectValue}}</p>
+    <select v-model="selectValue">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+<table border="1px">
+    <tr v-for="item in msg">
+        <td>{{item}}</td> <td>{{item}}</td> <td>{{item}}</td> <td>{{item}}</td>
+    </tr>
+</table>
 </div>
 
 <script>
   let app = new Vue({
     el:"#app",
     data:{
-      msg:["1","2","3","4"]
-    },
-
-
+      msg:["1","2","3","4"],
+      selectValue:"please selected !"
+    }
   })
+
 </script>
 </body>
 </html>
