@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import './assets/iconfonts/iconfont.css'
+import './assets/font_menu/iconfont.css'
+
 import axios from 'axios'
 //拦截器给每次请求附带token的
 axios.interceptors.request.use(requestConfig =>{

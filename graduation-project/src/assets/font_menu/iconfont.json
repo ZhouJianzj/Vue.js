@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "410202",
+      "name": "远程控制",
+      "font_class": "yuanchengkongzhi",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "1569472",
+      "name": "视频监控",
+      "font_class": "shipinjiankong",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "11672363",
+      "name": "系统管理",
+      "font_class": "xitongguanli",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}
