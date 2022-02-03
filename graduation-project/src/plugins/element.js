@@ -2,8 +2,11 @@ import Vue from 'vue'
 
 import {Message,Form,FormItem,Button,Input,Header,Aside,Main,Container,
 Menu,MenuItem,Submenu,Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
-    Pagination,Carousel,CarouselItem} from "element-ui";
+    Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox} from "element-ui";
 
+Vue.use(Select)
+Vue.use(Dialog)
+Vue.use(Option)
 Vue.use(CarouselItem)
 Vue.use(Carousel)
 Vue.use(Pagination)
@@ -27,4 +30,6 @@ Vue.use(Row)
 Vue.use(Col)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
+
 
