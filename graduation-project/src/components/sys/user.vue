@@ -129,7 +129,7 @@
   </el-dialog>
 
   <!-- 编辑用户的dialog-->
-  <el-dialog title="添加新的用户信息" :visible.sync="editDialogFormVisible" @close="editUserDialogCancel">
+  <el-dialog title="用户信息" :visible.sync="editDialogFormVisible" @close="editUserDialogCancel">
     <el-form :model="editUserForm" ref="editUserForm" :rules="addUserRules" label-width="70px">
       <el-form-item label="用户名" prop="username" >
         <el-input  v-model="editUserForm.username"></el-input>
@@ -325,7 +325,7 @@ export default {
       const {data:result} = await this.$http.put('/sys/user/modify',  this.editUserForm)
       if (result.code === 200 && result.result != null){
         this.editUserDialogCancel()
-        this.getUserList()
+        await this.getUserList()
         return this.$message.success(result.message)
       }else {
         this.editUserDialogCancel()
@@ -336,7 +336,6 @@ export default {
   // 用户删除
     deleteUser(userId){
       this.userId.id = userId
-      this.deleteDialogVisible =true
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -345,11 +344,13 @@ export default {
         const {data: res} = await this.$http.delete('/sys/user', {params: this.userId});
         if (res.code === 200 && res.result != null) {
           this.deleteDialogVisible = false
-          this.getUserList()
+          await this.getUserList()
           return this.$message.success(res.message)
+        }else {
+          return this.$message.error(res.message)
         }
       }).catch(() => {
-        return this.$message.error(res.message)
+        return this.$message.error("已取消删除！")
       });
 
     }
