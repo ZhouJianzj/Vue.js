@@ -26,7 +26,8 @@
               <span>{{ menu.menuName }}</span>
             </template>
 
-              <el-menu-item  @click="saveActivePath(item.route)" :index="item.route + '' "  v-for="item in menu.children" :key="item.id" >
+              <el-menu-item  @click="saveActivePath(item.route)" :index="item.route + '' "
+                             v-for="item in menu.children" :key="item.id" >
                 <template slot="title">
                   <i class="el-icon-location"></i>
                   <span>{{ item.menuName }}</span>
