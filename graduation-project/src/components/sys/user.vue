@@ -246,7 +246,6 @@ export default {
         roleId:""
       },
 
-      deleteDialogVisible:false,
       userId:{
         id:''
       }
@@ -343,7 +342,7 @@ export default {
       }).then(async () => {
         const {data: res} = await this.$http.delete('/sys/user', {params: this.userId});
         if (res.code === 200 && res.result != null) {
-          this.deleteDialogVisible = false
+
           await this.getUserList()
           return this.$message.success(res.message)
         }else {

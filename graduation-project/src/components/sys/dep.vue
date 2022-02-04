@@ -226,16 +226,19 @@ export default {
       this.addDialogFormVisible = false
       this.$refs.addForm.resetFields()
     },
-    async addDialogTrue() {
-      const {data: res} = await this.$http.post('/sys/dep', this.addForm)
-      if (res.code === 200 && res.result != null) {
-        this.$refs.addForm.resetFields()
-        await this.getDeps()
-        this.addDialogFormVisible = false
-        return this.$message.success(res.message)
-      } else {
-        return this.$message.error(res.message)
-      }
+     addDialogTrue() {
+       this.$refs.addForm.validate(async valid => {
+        if (!valid) return this.$message.error("信息有误")
+        const {data: res} = await this.$http.post('/sys/dep', this.addForm)
+        if (res.code === 200 && res.result != null) {
+          this.$refs.addForm.resetFields()
+          await this.getDeps()
+          this.addDialogFormVisible = false
+          return this.$message.success(res.message)
+        } else {
+          return this.$message.error(res.message)
+        }
+      })
     },
 
     editDep(data){
@@ -273,7 +276,7 @@ export default {
     },
     // delete more deps
     deleteDep(depId){
-      console.log(depId);
+      // console.log(depId);
       this.$confirm('此操作将永久删除该部门, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
