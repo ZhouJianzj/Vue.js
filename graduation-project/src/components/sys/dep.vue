@@ -345,4 +345,7 @@ export default {
 .el-pagination{
   margin-top: 20px;
 }
+.el-tag{
+  margin: 7px;
+}
 </style>

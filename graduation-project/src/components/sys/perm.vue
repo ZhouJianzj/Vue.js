@@ -47,8 +47,9 @@
         <el-table-column
             prop="route"
             label="路由名称"
-            show-overflow-tooltip>
+            show-overflow-tooltip >
         </el-table-column>
+
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="warning" icon="el-icon-edit" size="small" @click="editPerm(scope.row)"></el-button>
@@ -98,7 +99,7 @@
           <el-input v-model="perm.name"></el-input>
         </el-form-item>
         <el-form-item label="前端路由"  >
-          <el-input v-model="perm.route"></el-input>
+          <el-input v-model="perm.route" disabled></el-input>
         </el-form-item>
       </el-form>
 
