@@ -9,6 +9,7 @@ import axios from 'axios'
 //拦截器给每次请求附带token的
 axios.interceptors.request.use(requestConfig =>{
   requestConfig.headers.token = window.sessionStorage.getItem("token")
+  requestConfig.headers.username = window.sessionStorage.getItem("username")
   return requestConfig
 })
 //挂载axios

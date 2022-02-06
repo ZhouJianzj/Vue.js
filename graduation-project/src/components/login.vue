@@ -60,6 +60,9 @@ export default {
         const {data:result} = await this.$http.post("/sys/login",this.form);
         if (result.code === 200 && result.result != null){
           window.sessionStorage.setItem("token",result.result.token)
+          // console.log(result.result.user.username);
+          window.sessionStorage.setItem("username",result.result.user.username)
+
           await this.$router.push("/home")
           this.result = result
           return this.$message.success(result.message + "欢迎回来！")
