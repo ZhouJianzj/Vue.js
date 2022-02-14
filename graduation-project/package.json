@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build "
   },
   "dependencies": {
     "axios": "^0.25.0",
@@ -21,6 +21,7 @@
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "vue-cli-plugin-element": "^1.0.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-cli": "^4.9.2"
   }
 }

@@ -2,8 +2,10 @@ import Vue from 'vue'
 
 import {Message,Form,FormItem,Button,Input,Header,Aside,Main,Container,
 Menu,MenuItem,Submenu,Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
-    Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox,Tag,DatePicker} from "element-ui";
+    Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox,Tag,DatePicker
+,Avatar} from "element-ui";
 
+Vue.use(Avatar)
 Vue.use(DatePicker)
 Vue.use(Tag)
 Vue.use(Select)

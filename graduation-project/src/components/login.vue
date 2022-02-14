@@ -61,8 +61,10 @@ export default {
         if (result.code === 200 && result.result != null){
           window.sessionStorage.setItem("token",result.result.token)
           // console.log(result.result.user.username);
-          window.sessionStorage.setItem("username",result.result.user.username)
-
+          window.sessionStorage.setItem("id",result.result.user.id)
+          window.sessionStorage.setItem("username",encodeURIComponent(result.result.user.username))
+          window.sessionStorage.setItem("phone",result.result.user.phone)
+          window.sessionStorage.setItem("email",result.result.user.email)
           await this.$router.push("/home")
           this.result = result
           return this.$message.success(result.message + "欢迎回来！")
