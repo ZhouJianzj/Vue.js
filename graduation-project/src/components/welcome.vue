@@ -1,22 +1,56 @@
 <template>
 <div>
   <el-carousel :interval="4000" type="card" height="200px">
-    <el-carousel-item v-for="item in 6" :key="item">
-      <h3 class="medium">{{ item }}</h3>
+    <el-carousel-item>
+      <img src="../assets/weclome/sixPic/1.jpg">
+    </el-carousel-item>
+
+    <el-carousel-item>
+      <img src="../assets/weclome/sixPic/2.jpg">
+    </el-carousel-item>
+
+    <el-carousel-item>
+      <img src="../assets/weclome/sixPic/3.jpg">
+    </el-carousel-item>
+
+    <el-carousel-item>
+      <img src="../assets/weclome/sixPic/4.jpg">
+    </el-carousel-item>
+
+    <el-carousel-item>
+      <img src="../assets/weclome/sixPic/5.jpg">
     </el-carousel-item>
   </el-carousel>
 
   <el-carousel :interval="5000" arrow="always" height="400px">
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3>{{ item }}</h3>
+    <el-carousel-item >
+      <img src="../assets/weclome/fourPic/1.jpg">
+    </el-carousel-item>
+    <el-carousel-item>
+      <img src="../assets/weclome/fourPic/2.jpg">
+    </el-carousel-item>
+    <el-carousel-item>
+      <img src="../assets/weclome/fourPic/5.jpg">
+    </el-carousel-item>
+    <el-carousel-item>
+      <img src="../assets/weclome/fourPic/4.jpg">
     </el-carousel-item>
   </el-carousel>
+
 </div>
 </template>
 
 <script>
 export default {
-  name: "welcome"
+  name: "welcome",
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+
+  }
 }
 </script>
 

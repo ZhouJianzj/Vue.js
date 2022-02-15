@@ -9,13 +9,21 @@ import log from "../components/sys/log";
 import perm from "../components/sys/perm";
 import role from "../components/sys/role";
 import user from "../components/sys/user";
+import client from "../components/remote-control/client";
+import device from "../components/remote-control/device";
+import lockService from "../components/remote-control/lock-service"
+import offNoLock from  "../components/remote-control/off-no-lock"
+import history from "../components/video-monitor/history";
+import monitor from "../components/video-monitor/monitor";
 Vue.use(VueRouter)
 
 const routes = [
   {path:'/',redirect:'/login'},
 
   {path: "/login",component: login},
-  {path: "/home",component: home,redirect:'/welcome',
+
+  {path: "/home",component: home,
+    redirect:'/welcome',
     children:[
       {path: '/welcome',component: welcome},
       {path: '/user', component: user },
@@ -23,6 +31,12 @@ const routes = [
       {path: '/role', component: role },
       {path: '/perm', component: perm },
       {path: '/log', component: log },
+      {path: '/client', component: client },
+      {path: '/device', component: device },
+      {path: '/lockService', component: lockService },
+      {path: '/offNoLock', component: offNoLock },
+      {path: '/history', component: history },
+      {path: '/monitor', component: monitor },
     ]
   }
 
