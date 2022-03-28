@@ -128,7 +128,7 @@
     <!--添加
       涉及邮箱验证和手机号验证    -->
     <el-dialog title="添加新的客户" :visible.sync="addDialogFormVisible" @close="addDialogCancel">
-      <el-form :model="addForm"  label-width="130px">
+      <el-form :model="addForm"  label-width="150px">
         <el-form-item label="客户名称" >
           <div align="left"><el-input  v-model="addForm.name"  style="width: 30%;"></el-input></div>
         </el-form-item>
@@ -194,7 +194,6 @@
 </template>
 
 <script>
-import MyInput from "../MyCommponent/MyInput";
 export default {
   name: "client",
   created() {
@@ -271,8 +270,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
 
-  },
-  components:{MyInput}
+  }
 }
 </script>
 
