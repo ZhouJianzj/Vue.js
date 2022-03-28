@@ -86,8 +86,9 @@
       </el-pagination>
 
     </el-row>
-
   </el-card>
+
+
 <!--  添加用户的dialog-->
   <el-dialog title="添加新的用户信息" :visible.sync="addUserDialogFormVisible" @close="addUserDialogCancel">
     <el-form :model="addUserForm" ref="addUserForm" :rules="addUserRules" label-width="70px">

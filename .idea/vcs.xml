@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VUE-Second/VUE/vue-shop-admin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/iview-admin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vue-app-hanyunpingtai" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vue-shop-admin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vue3-knowledge-map" vcs="Git" />
   </component>

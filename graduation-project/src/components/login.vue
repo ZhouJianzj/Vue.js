@@ -12,7 +12,7 @@
           <!-- 使用prop添加验证规则 -->
           <el-form-item prop="username"  >
             <!--使用指定的图标，我们这里使用的阿里的图标库，使用规则就是 iconfont开始 后面更上图标的点之后的name-->
-            <el-input  v-model="form.username" prefix-icon="iconfont icon-yonghu"></el-input>
+            <el-input  v-model="form.username" prefix-icon="iconfont icon-icon-yonghu"></el-input>
           </el-form-item>
 
           <el-form-item prop="password" >

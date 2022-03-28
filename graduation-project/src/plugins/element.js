@@ -3,8 +3,10 @@ import Vue from 'vue'
 import {Message,Form,FormItem,Button,Input,Header,Aside,Main,Container,
 Menu,MenuItem,Submenu,Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
     Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox,Tag,DatePicker
+    ,Result
 ,Avatar,Image} from "element-ui";
 
+Vue.use(Result)
 Vue.use(Image)
 Vue.use(Avatar)
 Vue.use(DatePicker)

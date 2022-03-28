@@ -12,7 +12,6 @@ import user from "../components/sys/user";
 import client from "../components/remote-control/client";
 import device from "../components/remote-control/device";
 import lockService from "../components/remote-control/lock-service"
-import offNoLock from  "../components/remote-control/off-no-lock"
 import history from "../components/video-monitor/history";
 import monitor from "../components/video-monitor/monitor";
 Vue.use(VueRouter)
@@ -34,7 +33,7 @@ const routes = [
       {path: '/client', component: client },
       {path: '/device', component: device },
       {path: '/lockService', component: lockService },
-      {path: '/offNoLock', component: offNoLock },
+
       {path: '/history', component: history },
       {path: '/monitor', component: monitor },
     ]

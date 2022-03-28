@@ -1,15 +1,310 @@
 <template>
-<div>
-  client
-</div>
+  <div>
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>远程控制</el-breadcrumb-item>
+      <el-breadcrumb-item>客户维护</el-breadcrumb-item>
+    </el-breadcrumb>
+
+    <el-card>
+      <el-row :gutter="20">
+        <el-col :span="8">
+
+          <el-input placeholder="客户信息/债权人基本信息查询" clearable @clear="clearSearch" v-model="query.key">
+            <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+          </el-input>
+
+        </el-col>
+
+        <el-col :span="4">
+          <el-button type="primary" @click="add">添加</el-button>
+        </el-col>
+
+        <el-table
+            :data="clientList"
+            style="width: 100%;
+          margin-bottom: 20px;"
+            height="550"
+        >
+          <el-table-column type="expand" width="55">
+            <template slot-scope="scope">
+              <el-table :data="scope.row.devices" style="" v-show="scope.row.devices.length != 0 ">
+                <el-table-column
+                    prop="name"
+                    label="设备名称"
+                    sortable
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="desc"
+                    label="设备描述"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="status"
+                    label="设备运行状态"
+                    width="180">
+                  <template slot-scope="innerScope">
+                    <el-tag type="success" v-if="innerScope.row.status == 1">运行</el-tag>
+                    <el-tag type="danger" v-if="innerScope.row.status != 1">停机</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="lockService"
+                    label="锁机服务"
+                    width="180">
+                  <template slot-scope="innerScope">
+                    <svg class="icon" aria-hidden="true" v-show="innerScope.row.lockService == 1">
+                      <use xlink:href="#icon-yikaitong"></use>
+                    </svg>
+                    <svg class="icon" aria-hidden="true" v-show="innerScope.row.lockService != 1">
+                      <use xlink:href="#icon-guanbi"></use>
+                    </svg>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="lock"
+                    label="锁状态"
+                    width="180">
+                  <template slot-scope="innerScope">
+                    <svg class="icon" aria-hidden="true" v-show="innerScope.row.lock == 1">
+                      <use xlink:href="#icon-shangsuo"></use>
+                    </svg>
+                    <svg class="icon" aria-hidden="true" v-show="innerScope.row.lock == 0">
+                      <use xlink:href="#icon-jiesuo"></use>
+                    </svg>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+              prop="name"
+              label="姓名"
+              sortable
+              width="180">
+          </el-table-column>
+          <el-table-column
+              prop="phone"
+              label="手机号">
+          </el-table-column>
+          <el-table-column
+              prop="email"
+              label="邮箱">
+          </el-table-column>
+
+          <el-table-column
+              prop="ccName"
+              label="委托人/债权人">
+          </el-table-column>
+
+          <el-table-column
+              prop="ccPhone"
+              label="委托人/债权人手机号">
+          </el-table-column>
+
+          <el-table-column
+              prop="ccEmail"
+              label="委托人/债权人邮箱">
+          </el-table-column>
+
+        </el-table>
+        <!--      最全的分页-->
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="query.pageNum"
+            :page-sizes="[1, 2, 4, 8]"
+            :page-size="query.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
+      </el-row>
+
+    </el-card>
+
+
+    <!--添加
+      涉及邮箱验证和手机号验证    -->
+    <el-dialog title="添加新的客户" :visible.sync="addDialogFormVisible" @close="addDialogCancel">
+      <el-form :model="addForm"  label-width="130px">
+        <el-form-item label="客户名称" >
+          <div align="left"><el-input  v-model="addForm.name"  style="width: 30%;"></el-input></div>
+        </el-form-item>
+        <el-form-item label="客户手机号" >
+          <table>
+            <tr>
+              <td><el-input v-model="addForm.phone" ></el-input></td>
+              <td><el-button type="success" plain>获取验证码</el-button></td>
+            </tr>
+            <tr>
+              <td><el-input v-model="addForm.phoneAuthCode" ></el-input></td>
+            </tr>
+          </table>
+        </el-form-item>
+        <el-form-item label="客户邮箱" >
+          <table>
+            <tr>
+              <td><el-input v-model="addForm.email" ></el-input></td>
+              <td><el-button type="success" plain>获取验证码</el-button></td>
+            </tr>
+            <tr>
+              <td><el-input v-model="addForm.emailAuthCode" ></el-input></td>
+            </tr>
+          </table>
+        </el-form-item>
+
+        <el-form-item label="债权人/委托人姓名" >
+          <div align="left"><el-input v-model="addForm.ccname" style="width: 30%;"></el-input></div>
+        </el-form-item>
+
+        <el-form-item label="债权人/委托人邮箱" >
+          <table>
+            <tr>
+              <td><el-input v-model="addForm.ccemil" ></el-input></td>
+              <td><el-button type="success" plain>获取验证码</el-button></td>
+            </tr>
+            <tr>
+              <td><el-input v-model="addForm.ccemilAuthCode" ></el-input></td>
+            </tr>
+          </table>
+        </el-form-item>
+
+        <el-form-item label="债权人/委托人手机号" >
+          <table>
+            <tr>
+              <td><el-input v-model="addForm.ccphone" ></el-input></td>
+              <td><el-button type="success" plain>获取验证码</el-button></td>
+            </tr>
+            <tr>
+              <td><el-input v-model="addForm.ccphoneAuthCode" ></el-input></td>
+            </tr>
+          </table>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addDialogCancel">取 消</el-button>
+        <el-button type="primary" @click="addDialogAffirm">确 定</el-button>
+      </div>
+
+    </el-dialog>
+  </div>
 </template>
 
 <script>
+import MyInput from "../MyCommponent/MyInput";
 export default {
-  name: "client"
+  name: "client",
+  created() {
+    this.getClientList()
+  },
+  data() {
+    return {
+      clientList: [],
+
+      query: {
+        pageNum: 1,
+        pageSize: 8,
+        key: ""
+      },
+      total: 0,
+
+      addForm: {
+        name: '',
+        phone: "",
+        phoneAuthCode:"",
+        email: "",
+        emailAuthCode:"",
+        ccname: "",
+        ccemil: "",
+        ccemilAuthCode:"",
+        ccphone: "",
+        ccphoneAuthCode:""
+      },
+
+      editDialogFormVisible: false,
+
+      addDialogFormVisible: false,
+
+    }
+  },
+  methods: {
+    //查询所有的客户信息
+    async getClientList() {
+      const {data: res} = await this.$http.post('/rc/client/getClientInfo', this.query)
+      if (res.code === 200 && res.result != null) {
+        this.clientList = res.result.list
+        this.total = res.result.total
+      }
+    },
+    search() {
+      this.getClientList()
+    },
+    //删除图标的事件
+    clearSearch() {
+      this.query.key = ""
+      this.getClientList()
+    },
+    add() {
+      this.addDialogFormVisible = true
+    },
+
+    addDialogCancel() {
+      this.addDialogFormVisible = false
+    },
+    addDialogAffirm() {
+      this.addDialogFormVisible = false
+    },
+    getAuthCode(){},
+
+    //分页
+    handleSizeChange(val) {
+      this.query.pageSize = val
+      this.getClientList();
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.query.pageNum = val
+      this.getClientList();
+      console.log(`当前页: ${val}`);
+    },
+
+  },
+  components:{MyInput}
 }
 </script>
 
 <style scoped>
+.el-breadcrumb {
+  margin-bottom: 20px;
+}
 
+.el-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.el-table {
+  margin-top: 50px;
+  font-size: 12px;
+
+}
+
+.el-pagination {
+  margin-top: 20px;
+}
+
+.div-table {
+  margin-top: 0px;
+
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 </style>

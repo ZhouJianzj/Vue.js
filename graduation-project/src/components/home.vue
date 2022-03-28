@@ -11,6 +11,7 @@
 <div class="head_pic">
     <el-menu class="el-menu-demo" mode="horizontal">
         <el-submenu index="2" >
+
           <template slot="title">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
           </template>
@@ -25,6 +26,8 @@
             <el-menu-item index="2-3">
               <el-button size="mini" @click="logout" >退出登录</el-button>
             </el-menu-item>
+
+
         </el-submenu>
     </el-menu>
 </div>

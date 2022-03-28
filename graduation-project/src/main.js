@@ -2,8 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
+import'./assets/iconfonts/kaiguan'
+import'./assets/iconfonts/suo'
 import './assets/iconfonts/iconfont.css'
 import './assets/font_menu/iconfont.css'
+
+
+
+
+
 
 import axios from 'axios'
 //拦截器给每次请求附带token的
@@ -24,5 +31,5 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app')
