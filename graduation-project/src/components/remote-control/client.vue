@@ -9,11 +9,9 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
-
           <el-input placeholder="客户信息/债权人基本信息查询" clearable @clear="clearSearch" v-model="query.key">
             <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
           </el-input>
-
         </el-col>
 
         <el-col :span="4">
@@ -109,6 +107,11 @@
               label="委托人/债权人邮箱">
           </el-table-column>
 
+          <el-table-column
+              prop="createTime"
+              label="创建时间">
+          </el-table-column>
+
         </el-table>
         <!--      最全的分页-->
         <el-pagination
@@ -128,59 +131,99 @@
     <!--添加
       涉及邮箱验证和手机号验证    -->
     <el-dialog title="添加新的客户" :visible.sync="addDialogFormVisible" @close="addDialogCancel">
-      <el-form :model="addForm"  label-width="150px">
-        <el-form-item label="客户名称" >
-          <div align="left"><el-input  v-model="addForm.name"  style="width: 30%;"></el-input></div>
-        </el-form-item>
-        <el-form-item label="客户手机号" >
-          <table>
-            <tr>
-              <td><el-input v-model="addForm.phone" ></el-input></td>
-              <td><el-button type="success" plain>获取验证码</el-button></td>
-            </tr>
-            <tr>
-              <td><el-input v-model="addForm.phoneAuthCode" ></el-input></td>
-            </tr>
-          </table>
-        </el-form-item>
-        <el-form-item label="客户邮箱" >
-          <table>
-            <tr>
-              <td><el-input v-model="addForm.email" ></el-input></td>
-              <td><el-button type="success" plain>获取验证码</el-button></td>
-            </tr>
-            <tr>
-              <td><el-input v-model="addForm.emailAuthCode" ></el-input></td>
-            </tr>
-          </table>
+      <el-form :model="addForm"
+               label-width="153px"
+               ref="addFormRef"
+               :rules="addFormRules">
+
+        <el-form-item label="客户名称">
+          <div align="left">
+            <el-input v-model="addForm.name" style="width: 30%;"></el-input>
+          </div>
         </el-form-item>
 
-        <el-form-item label="债权人/委托人姓名" >
-          <div align="left"><el-input v-model="addForm.ccname" style="width: 30%;"></el-input></div>
+        <el-form-item
+            label="客户邮箱"
+            prop="email">
+          <div align="left">
+            <el-input v-model="addForm.email" style="width: 30%;"></el-input>
+            <el-button type="success" plain @click="getAuthCode('1',addForm.email)">获取验证码</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div align="left">
+            <el-input v-model="addForm.emailAuthCode"
+                      @blur="inputOnBlur('1',addForm.emailAuthCode)" style="width: 30%;"
+                      placeholder="验证码"
+                      :suffix-icon="suffixIcon1">
+
+            </el-input>
+          </div>
         </el-form-item>
 
-        <el-form-item label="债权人/委托人邮箱" >
-          <table>
-            <tr>
-              <td><el-input v-model="addForm.ccemil" ></el-input></td>
-              <td><el-button type="success" plain>获取验证码</el-button></td>
-            </tr>
-            <tr>
-              <td><el-input v-model="addForm.ccemilAuthCode" ></el-input></td>
-            </tr>
-          </table>
+
+        <el-form-item label="客户手机号" prop="phone">
+          <div align="left">
+            <el-input v-model="addForm.phone" style="width: 30%;"></el-input>
+            <el-button type="success" plain @click="getAuthCode('2',addForm.phone)">获取验证码</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div align="left">
+            <el-input style="width: 30%;"
+                      v-model="addForm.phoneAuthCode"
+                      placeholder="验证码"
+                      @blur="inputOnBlur('2',addForm.phoneAuthCode)"
+                      :suffix-icon="suffixIcon2">
+
+            </el-input>
+          </div>
         </el-form-item>
 
-        <el-form-item label="债权人/委托人手机号" >
-          <table>
-            <tr>
-              <td><el-input v-model="addForm.ccphone" ></el-input></td>
-              <td><el-button type="success" plain>获取验证码</el-button></td>
-            </tr>
-            <tr>
-              <td><el-input v-model="addForm.ccphoneAuthCode" ></el-input></td>
-            </tr>
-          </table>
+
+        <el-form-item label="债权人/委托人姓名">
+          <div align="left">
+            <el-input v-model="addForm.ccname" style="width: 30%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="债权人/委托人邮箱" prop="email">
+          <div align="left">
+            <el-input v-model="addForm.ccemil" style="width: 30%;"></el-input>
+            <el-button type="success" plain @click="getAuthCode('3',addForm.ccemil)">获取验证码</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div align="left">
+            <el-input v-model="addForm.ccemilAuthCode"
+                      style="width: 30%;"
+                      placeholder="验证码"
+                      @blur="inputOnBlur('3',addForm.ccemilAuthCode)"
+                      :suffix-icon="suffixIcon3"
+            >
+
+            </el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="债权人/委托人手机号" prop="phone">
+          <div align="left">
+            <el-input v-model="addForm.ccphone" style="width: 30%;"></el-input>
+            <el-button type="success" plain @click="getAuthCode('4',addForm.ccphone)">获取验证码</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item>
+          <div align="left">
+            <el-input v-model="addForm.ccphoneAuthCode"
+                      style="width: 30%;"
+                      placeholder="验证码"
+                      @blur="inputOnBlur('4',addForm.ccphoneAuthCode)"
+                      :suffix-icon="suffixIcon4"
+            >
+
+            </el-input>
+          </div>
         </el-form-item>
 
       </el-form>
@@ -188,7 +231,6 @@
         <el-button @click="addDialogCancel">取 消</el-button>
         <el-button type="primary" @click="addDialogAffirm">确 定</el-button>
       </div>
-
     </el-dialog>
   </div>
 </template>
@@ -200,6 +242,21 @@ export default {
     this.getClientList()
   },
   data() {
+    //自定义的校验规则
+    const checkEmail = (rule, value, callback) => {
+      const regEmail = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+      const reg = regEmail.test(value)
+      this.reg = reg
+      if (!reg) callback(new Error('请输入正确的邮箱'))
+      callback()
+    }
+    const checkPhone = (rule, value, callback) => {
+      const regModel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+      const reg = regModel.test(value)
+      this.reg = reg
+      if (!reg) callback(new Error("请输入正确的手机号"))
+      callback()
+    }
     return {
       clientList: [],
 
@@ -213,21 +270,41 @@ export default {
       addForm: {
         name: '',
         phone: "",
-        phoneAuthCode:"",
+        phoneAuthCode: "",
         email: "",
-        emailAuthCode:"",
+        emailAuthCode: "",
         ccname: "",
         ccemil: "",
-        ccemilAuthCode:"",
+        ccemilAuthCode: "",
         ccphone: "",
-        ccphoneAuthCode:""
+        ccphoneAuthCode: ""
       },
+      emailAuthCode: "",
+      phoneAuthCode: "",
+      ccemilAuthCode: "",
+      ccphoneAuthCode: "",
 
       editDialogFormVisible: false,
 
       addDialogFormVisible: false,
 
+
+      addFormRules: {
+        phone: [
+          {validator: checkPhone, trigger: 'blur'}
+        ],
+        email: [
+          {validator: checkEmail, trigger: 'blur'}
+        ],
+      },
+      reg: false,
+      suffixIcon1: "",
+      suffixIcon2: "",
+      suffixIcon3: "",
+      suffixIcon4: "",
+
     }
+
   },
   methods: {
     //查询所有的客户信息
@@ -252,11 +329,79 @@ export default {
 
     addDialogCancel() {
       this.addDialogFormVisible = false
+      this.addForm = {}
     },
     addDialogAffirm() {
       this.addDialogFormVisible = false
     },
-    getAuthCode(){},
+
+    //验证码按钮获取验证码
+    async getAuthCode(code, msg) {
+      console.log(code);
+      console.log(this.reg);
+      if (this.reg) {
+        const {data: res} = await this.$http.get('/rc/client/AuthCode?msg=' + msg)
+        if (res.code == 200) {
+          if (code == '1') {
+            this.emailAuthCode = res.result
+            console.log(this.emailAuthCode + "====" + code);
+          }
+          if (code == '2') {
+            this.phoneAuthCode = res.result
+            console.log(this.phoneAuthCode + "====" + code);
+          }
+          if (code == '3') {
+            this.ccemilAuthCode = res.result
+            console.log(this.ccemilAuthCode + "====" + code);
+          }
+          if (code == '4') {
+            this.ccphoneAuthCode = res.result
+            console.log(this.ccphoneAuthCode + "====" + code);
+          }
+          return this.$message.success("验证码发成功")
+        }
+      }
+      return this.$message.error("请输入正确的是手机号")
+    },
+
+    //验证码输入框验证
+    inputOnBlur(no, authCode) {
+      if (no == '1' && authCode === this.emailAuthCode && this.emailAuthCode != '') {
+        this.suffixIcon1 = "iconfont icon-yanzhengtongguo"
+        return
+      }
+      if (no == '1' && authCode != this.emailAuthCode && this.emailAuthCode != ''){
+        this.suffixIcon1 = "iconfont icon-yanzhengshibai"
+        return
+      }
+
+      if (no == '2' && authCode === this.phoneAuthCode && this.phoneAuthCode != '') {
+        this.suffixIcon2 = "iconfont icon-yanzhengtongguo"
+        return
+
+      } if ((no == '2' && authCode != this.phoneAuthCode && this.phoneAuthCode != '')) {
+        this.suffixIcon2 = "iconfont icon-yanzhengshibai"
+        return
+      }
+
+
+      if (no == '3' && authCode === this.ccemilAuthCode && this.ccemilAuthCode != '') {
+        this.suffixIcon3 = "iconfont icon-yanzhengtongguo"
+        return
+      } if (no == '3' && authCode != this.ccemilAuthCode && this.ccemilAuthCode != '') {
+        this.suffixIcon3 = "iconfont icon-yanzhengshibai"
+        return
+      }
+
+      if (no == '4' && authCode === this.ccphoneAuthCode && this.ccphoneAuthCode != '') {
+        this.suffixIcon4 = "iconfont icon-yanzhengtongguo"
+        return
+      } if (no == '4' && authCode != this.ccphoneAuthCode && this.ccphoneAuthCode != '') {
+        this.suffixIcon4 = "iconfont icon-yanzhengshibai"
+        return
+      }
+
+    },
 
     //分页
     handleSizeChange(val) {

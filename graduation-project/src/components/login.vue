@@ -60,7 +60,7 @@ export default {
         const {data:result} = await this.$http.post("/sys/login",this.form);
         if (result.code === 200 && result.result != null){
           window.sessionStorage.setItem("token",result.result.token)
-          // console.log(result.result.user.username);
+          // console.log(result.result);
           window.sessionStorage.setItem("id",result.result.user.id)
           window.sessionStorage.setItem("username",encodeURIComponent(result.result.user.username))
           window.sessionStorage.setItem("phone",result.result.user.phone)

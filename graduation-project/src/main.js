@@ -6,6 +6,8 @@ import'./assets/iconfonts/kaiguan'
 import'./assets/iconfonts/suo'
 import './assets/iconfonts/iconfont.css'
 import './assets/font_menu/iconfont.css'
+import './assets/iconfonts/tonggou/iconfont.css'
+import './assets/iconfonts/shibai/iconfont.css'
 
 import axios from 'axios'
 //拦截器给每次请求附带token的

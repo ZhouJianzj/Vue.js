@@ -9,27 +9,14 @@
       </div>
 
 <div class="head_pic">
-    <el-menu class="el-menu-demo" mode="horizontal">
-        <el-submenu index="2" >
-
-          <template slot="title">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-          </template>
-            <el-menu-item index="2-1" >
-              <el-button  size="mini" @click="modifyMessage">修改信息</el-button>
-            </el-menu-item>
-
-            <el-menu-item index="2-2" >
-              <el-button  size="mini" @click="modifyPassword">修改密码</el-button>
-            </el-menu-item>
-
-            <el-menu-item index="2-3">
-              <el-button size="mini" @click="logout" >退出登录</el-button>
-            </el-menu-item>
-
-
-        </el-submenu>
-    </el-menu>
+  <el-dropdown @command="handleCommand">
+    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item command="modifyMessage">修改信息</el-dropdown-item>
+      <el-dropdown-item command="modifyPassword">修改密码</el-dropdown-item>
+      <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
 </div>
 
     </el-header>
@@ -43,7 +30,7 @@
                  active-text-color="#ffd04b"
                  :unique-opened="true"
                  :collapse="isCollapse"
-                 :collapse-transition="false" 
+                 :collapse-transition="false"
                  :router="true"
                  :default-active=isActive
                 >
@@ -196,7 +183,8 @@ export default {
   },
   methods:{
     async getMenu(){
-      const {data:menus} = await this.$http.get('/sys/menu');
+     const id =window.sessionStorage.getItem("id");
+      const {data:menus} = await this.$http.get('/sys/menu',{params:{userId:id}});
       this.menus = menus.result
     },
     modifyMessage(){
@@ -253,9 +241,28 @@ export default {
       this.passwordForm = {}
       this.passwordDialogFormVisible = false;
     },
+
+    handleCommand(command){
+      this.$message.success(command)
+      if (command === "modifyMessage"){
+        this.modifyMessage()
+      }
+      if (command === "modifyPassword"){
+        this.modifyPassword()
+      }
+      if (command === "logout"){
+        this.logout()
+      }
+    },
     // 用户退出登录
     logout(){
-      window.sessionStorage.clear()
+      //清除redis缓存菜单
+      this.$http.get('/sys/logout')
+      //延时操作避免过早的清除token导致退出登录没有权限
+      setTimeout(function(){
+        window.sessionStorage.clear()
+      },50000)
+
       this.$router.push('/login')
       this.$message.info("已退出登录！")
     },
