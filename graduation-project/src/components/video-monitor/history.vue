@@ -7,7 +7,7 @@
     </el-breadcrumb>
 
     <el-card >
-
+      <iframe    style="height: 100vh;width: 100%" src="http://10.90.15.202/vision/cloudconfig/custom/previews/display.html?tag=displays/demo-app-zj/%E7%9B%91%E6%8E%A7%EF%BC%881%EF%BC%89.json&visionId=693776110701248512"></iframe>
 
     </el-card>
   </div>

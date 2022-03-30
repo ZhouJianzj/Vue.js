@@ -73,6 +73,19 @@
                     </svg>
                   </template>
                 </el-table-column>
+
+                <el-table-column
+                    label="解除绑定">
+                  <template slot-scope="operation">
+                    <el-button  size="small" @click="removeBindDevice(scope.row.id,operation.row.id)">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-jiebang"></use>
+                      </svg>
+                    </el-button>
+                  </template>
+                </el-table-column>
+
+
               </el-table>
             </template>
           </el-table-column>
@@ -81,7 +94,7 @@
               prop="name"
               label="姓名"
               sortable
-              width="180">
+              width="100">
           </el-table-column>
           <el-table-column
               prop="phone"
@@ -94,7 +107,8 @@
 
           <el-table-column
               prop="ccName"
-              label="委托人/债权人">
+              label="委托人/债权人"
+              width="100">
           </el-table-column>
 
           <el-table-column
@@ -110,6 +124,20 @@
           <el-table-column
               prop="createTime"
               label="创建时间">
+          </el-table-column>
+
+
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <el-button  size="small" @click="bindDevice(scope.row)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-bangdingjilu"></use>
+                </svg>
+              </el-button>
+              <el-button type="danger" icon="el-icon-delete" size="small"
+                         @click="deleteClient(scope.row.id)"></el-button>
+            </template>
+
           </el-table-column>
 
         </el-table>
@@ -187,10 +215,10 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="债权人/委托人邮箱" prop="email">
+        <el-form-item label="债权人/委托人邮箱" prop="ccemail">
           <div align="left">
-            <el-input v-model="addForm.ccemil" style="width: 30%;"></el-input>
-            <el-button type="success" plain @click="getAuthCode('3',addForm.ccemil)">获取验证码</el-button>
+            <el-input v-model="addForm.ccemail" style="width: 30%;"></el-input>
+            <el-button type="success" plain @click="getAuthCode('3',addForm.ccemail)">获取验证码</el-button>
           </div>
         </el-form-item>
         <el-form-item>
@@ -206,7 +234,7 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="债权人/委托人手机号" prop="phone">
+        <el-form-item label="债权人/委托人手机号" prop="ccphone">
           <div align="left">
             <el-input v-model="addForm.ccphone" style="width: 30%;"></el-input>
             <el-button type="success" plain @click="getAuthCode('4',addForm.ccphone)">获取验证码</el-button>
@@ -232,6 +260,8 @@
         <el-button type="primary" @click="addDialogAffirm">确 定</el-button>
       </div>
     </el-dialog>
+
+
   </div>
 </template>
 
@@ -274,7 +304,7 @@ export default {
         email: "",
         emailAuthCode: "",
         ccname: "",
-        ccemil: "",
+        ccemail: "",
         ccemilAuthCode: "",
         ccphone: "",
         ccphoneAuthCode: ""
@@ -294,6 +324,12 @@ export default {
           {validator: checkPhone, trigger: 'blur'}
         ],
         email: [
+          {validator: checkEmail, trigger: 'blur'}
+        ],
+        ccphone: [
+          {validator: checkPhone, trigger: 'blur'}
+        ],
+        ccemail: [
           {validator: checkEmail, trigger: 'blur'}
         ],
       },
@@ -330,9 +366,23 @@ export default {
     addDialogCancel() {
       this.addDialogFormVisible = false
       this.addForm = {}
+      this.suffixIcon1 = "",
+          this.suffixIcon2 = "",
+          this.suffixIcon3 = "",
+          this.suffixIcon4 = ""
+      this.reg = false
+      this.$refs.addFormRef.clearValidate()
     },
-    addDialogAffirm() {
-      this.addDialogFormVisible = false
+    async addDialogAffirm() {
+      const {data: res} = await this.$http.post("/rc/client/addClient", this.addForm)
+      console.log(res);
+      if (res.code == 200) {
+        this.$message.success(res.message)
+        this.addDialogFormVisible = false
+      } else {
+        this.$message.error(res.message)
+      }
+
     },
 
     //验证码按钮获取验证码
@@ -344,10 +394,12 @@ export default {
         if (res.code == 200) {
           if (code == '1') {
             this.emailAuthCode = res.result
+
             console.log(this.emailAuthCode + "====" + code);
           }
           if (code == '2') {
             this.phoneAuthCode = res.result
+
             console.log(this.phoneAuthCode + "====" + code);
           }
           if (code == '3') {
@@ -361,7 +413,7 @@ export default {
           return this.$message.success("验证码发成功")
         }
       }
-      return this.$message.error("请输入正确的是手机号")
+      return this.$message.error("请输入正确的信息")
     },
 
     //验证码输入框验证
@@ -370,7 +422,7 @@ export default {
         this.suffixIcon1 = "iconfont icon-yanzhengtongguo"
         return
       }
-      if (no == '1' && authCode != this.emailAuthCode && this.emailAuthCode != ''){
+      if (no == '1' && authCode != this.emailAuthCode && this.emailAuthCode != '') {
         this.suffixIcon1 = "iconfont icon-yanzhengshibai"
         return
       }
@@ -379,7 +431,8 @@ export default {
         this.suffixIcon2 = "iconfont icon-yanzhengtongguo"
         return
 
-      } if ((no == '2' && authCode != this.phoneAuthCode && this.phoneAuthCode != '')) {
+      }
+      if ((no == '2' && authCode != this.phoneAuthCode && this.phoneAuthCode != '')) {
         this.suffixIcon2 = "iconfont icon-yanzhengshibai"
         return
       }
@@ -388,7 +441,8 @@ export default {
       if (no == '3' && authCode === this.ccemilAuthCode && this.ccemilAuthCode != '') {
         this.suffixIcon3 = "iconfont icon-yanzhengtongguo"
         return
-      } if (no == '3' && authCode != this.ccemilAuthCode && this.ccemilAuthCode != '') {
+      }
+      if (no == '3' && authCode != this.ccemilAuthCode && this.ccemilAuthCode != '') {
         this.suffixIcon3 = "iconfont icon-yanzhengshibai"
         return
       }
@@ -396,7 +450,8 @@ export default {
       if (no == '4' && authCode === this.ccphoneAuthCode && this.ccphoneAuthCode != '') {
         this.suffixIcon4 = "iconfont icon-yanzhengtongguo"
         return
-      } if (no == '4' && authCode != this.ccphoneAuthCode && this.ccphoneAuthCode != '') {
+      }
+      if (no == '4' && authCode != this.ccphoneAuthCode && this.ccphoneAuthCode != '') {
         this.suffixIcon4 = "iconfont icon-yanzhengshibai"
         return
       }
@@ -414,6 +469,22 @@ export default {
       this.getClientList();
       console.log(`当前页: ${val}`);
     },
+
+
+    //客户绑定设备
+    bindDevice(row) {
+      console.log(row);
+    },
+    //客户解除设备绑定
+    removeBindDevice(clientId,deviceId){
+      console.log(clientId);
+      console.log(deviceId);
+    },
+    //删除客户
+    deleteClient(clientId) {
+      console.log(clientId);
+    },
+
 
   }
 }
