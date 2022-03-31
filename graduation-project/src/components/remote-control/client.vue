@@ -151,8 +151,8 @@
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
         </el-pagination>
-      </el-row>
 
+      </el-row>
     </el-card>
 
 

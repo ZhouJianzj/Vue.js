@@ -4,7 +4,7 @@
     <div class="login_box">
 
       <div class="login-head">
-        <img src="../assets/pig1.png" >
+        <img class="touxiang" src="../assets/pig1.png" >
       </div>
 
       <div class="login_from">
@@ -27,7 +27,12 @@
       </div>
 
     </div>
+
+
+    <img class="bg_pic" :src="picPath">
+
   </div>
+
 </template>
 
 <script>
@@ -35,6 +40,7 @@ export default {
   name: "login",
   data(){
     return{
+      picPath:require("../assets/gk1.jpg"),
       form:{
         username:'zhoujian',
         password:'123321'
@@ -83,11 +89,22 @@ export default {
 </script>
 
 <style scoped >
+.bg_pic{
+  /*z-index:-1;*/
+  /*position: absolute;*/
+  /*width: 1920px;*/
+  /*height: 1080px;*/
+}
+
   .login_container{
-    background-color: #2c3e50;
+
+    /*background-color: #2c3e50;*/
     height: 100%;
   }
   .login_box{
+    /*z-index:1;*/
+    /*position: absolute;*/
+
     width: 450px;
     height: 300px;
     background-color: #fff;
@@ -110,7 +127,7 @@ export default {
     transform: translate(-50%,-50%);
     background-color: #fff;
   }
-  img {
+.touxiang {
     width: 100%;
     height: 100%;
     border-radius: 50%;
