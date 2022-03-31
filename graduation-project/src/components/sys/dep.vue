@@ -25,6 +25,7 @@
             :data="deps"
             tooltip-effect="dark"
             style="width: 100%"
+            height="540"
            >
           <el-table-column
               type="index"

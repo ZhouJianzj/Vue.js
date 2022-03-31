@@ -19,6 +19,7 @@
         <el-col :span="4">
 
           <el-date-picker
+
               v-model="date"
               clearable
               @blur="dataBlur"
@@ -34,7 +35,7 @@
 
         </el-col>
 
-              <el-table :data="logsList" style="width: 100%" stripe border>
+              <el-table  height="550" :data="logsList" style="width: 100%" stripe border>
                 <el-table-column type="index"></el-table-column>
                 <el-table-column prop="path" label="路径" width="120"></el-table-column>
                 <el-table-column prop="browser" label="客户端" width="120"></el-table-column>
@@ -62,7 +63,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryParams.pageNo"
-            :page-sizes="[1, 2, 4, 8]"
+            :page-sizes="[1, 2, 4, 10]"
             :page-size="queryParams.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
@@ -89,7 +90,7 @@ export default {
         from:"",
         end:"",
         pageNo:1,
-        pageSize:8
+        pageSize:10
       },
       logsList:[],
       date:'',
