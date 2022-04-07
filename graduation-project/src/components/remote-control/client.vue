@@ -77,7 +77,7 @@
                 <el-table-column
                     label="解除绑定">
                   <template slot-scope="operation">
-                    <el-button  size="small" @click="removeBindDevice(scope.row.id,operation.row.id)">
+                    <el-button size="small" @click="removeBindDevice(scope.row.id,operation.row.id)">
                       <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-jiebang"></use>
                       </svg>
@@ -129,7 +129,7 @@
 
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
-              <el-button  size="small" @click="bindDevice(scope.row)">
+              <el-button size="small" @click="bindDevice(scope.row)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-bangdingjilu"></use>
                 </svg>
@@ -262,6 +262,42 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="绑定设备"
+               :visible.sync="bindDeviceDialogFormVisible"
+               @close="bindDeviceDialogCancel">
+      <el-form  :model="bindForm"
+               label-width="153px">
+
+        <el-form-item label="客户编号">
+          <div align="left">
+            <el-input v-model="bindForm.clientId" disabled style="width: 30%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="客户名称">
+          <div align="left">
+            <el-input v-model="selectRow.name" disabled style="width: 30%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="需要绑定设备" >
+          <div align="left">
+            <el-select v-model="bindForm.clientBindNewDevice"
+                       multiple placeholder="请选择" >
+              <el-option :label="video.name" :value="video.id"
+                         v-for="video in devicesHasNoClient" >
+              </el-option>
+            </el-select>
+          </div>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="bindDeviceDialogCancel">取 消</el-button>
+        <el-button type="primary" @click="bindDeviceAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
+
 
   </div>
 </template>
@@ -340,10 +376,74 @@ export default {
       suffixIcon3: "",
       suffixIcon4: "",
 
+      selectRow: {},
+      devicesHasNoClient:[],
+      bindDeviceDialogFormVisible: false,
+      bindForm:{
+        clientId:'',
+        clientBindNewDevice:[]
+      },
     }
 
   },
   methods: {
+    //客户绑定设备
+    bindDevice(row) {
+      // console.log(row);
+      this.bindDeviceDialogFormVisible = true
+      this.selectRow = row
+      this.bindForm.clientId = this.selectRow.id
+      this.getDeviceNoBindClient()
+    },
+    //取消绑定的对话框
+    bindDeviceDialogCancel() {
+      this.bindDeviceDialogFormVisible = false
+      this.selectRow = {}
+      this.bindForm = {}
+    },
+
+    //对话提交
+    async bindDeviceAffirm() {
+      const {data: res} = await this.$http.post("/rc/client/clientBindDevice", this.bindForm)
+      if (res.code === 200){
+        this.$message.success("设备绑定客户成功！")
+      }else {
+        this.$message.error("设备绑定客户失败！")
+      }
+      this.bindDeviceDialogCancel()
+      await this.getClientList()
+    },
+
+    //获取所有的没有绑定客户的设备
+    async getDeviceNoBindClient() {
+      const {data: res} = await this.$http.post("/rc/device/getDeviceNoBindClient")
+      console.log(res);
+      if (res.code === 200){
+        this.devicesHasNoClient = res.result
+      }else {
+        this.$message.error("查询所有没有绑定客户的设备失败！")
+      }
+    },
+
+    //客户解除设备绑定
+    async removeBindDevice(clientId, deviceId) {
+      const {data: res} = await this.$http.put("/rc/client/removeBindDevice", {
+        clientId: clientId,
+        deviceId: deviceId
+      })
+      if(res.code === 200){
+        this.$message.success(res.message)
+      }else {
+        this.$message.error(res.message)
+      }
+      await this.getClientList()
+    },
+    //删除客户
+    deleteClient(clientId) {
+      console.log(clientId);
+    },
+
+
     //查询所有的客户信息
     async getClientList() {
       const {data: res} = await this.$http.post('/rc/client/getClientInfo', this.query)
@@ -459,6 +559,7 @@ export default {
 
     },
 
+
     //分页
     handleSizeChange(val) {
       this.query.pageSize = val
@@ -470,22 +571,6 @@ export default {
       this.getClientList();
       console.log(`当前页: ${val}`);
     },
-
-
-    //客户绑定设备
-    bindDevice(row) {
-      console.log(row);
-    },
-    //客户解除设备绑定
-    removeBindDevice(clientId,deviceId){
-      console.log(clientId);
-      console.log(deviceId);
-    },
-    //删除客户
-    deleteClient(clientId) {
-      console.log(clientId);
-    },
-
 
   }
 }
