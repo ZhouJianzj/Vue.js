@@ -62,7 +62,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="lock"
-                    label="锁状态"
+                    label="锁机状态"
                     width="180">
                   <template slot-scope="innerScope">
                     <svg class="icon" aria-hidden="true" v-show="innerScope.row.lock == 1">
@@ -85,7 +85,20 @@
                   </template>
                 </el-table-column>
 
-
+                <el-table-column
+                    label="开/关锁">
+                  <template slot-scope="switchScope">
+                    <el-switch ref="switchRef"
+                        v-if="switchScope.row.lock != null"
+                        v-model="switchScope.row.lock"
+                        active-value="1"
+                        inactive-value="0"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        @change="switchChange(switchScope.row)">
+                    </el-switch>
+                  </template>
+                </el-table-column>
               </el-table>
             </template>
           </el-table-column>
@@ -141,6 +154,8 @@
           </el-table-column>
 
         </el-table>
+
+
         <!--      最全的分页-->
         <el-pagination
             @size-change="handleSizeChange"
@@ -159,7 +174,9 @@
 
     <!--添加
       涉及邮箱验证和手机号验证    -->
-    <el-dialog title="添加新的客户" :visible.sync="addDialogFormVisible" @close="addDialogCancel">
+    <el-dialog title="添加新的客户"
+               :visible.sync="addDialogFormVisible"
+               @close="addDialogCancel">
       <el-form :model="addForm"
                label-width="153px"
                ref="addFormRef"
@@ -262,6 +279,8 @@
       </div>
     </el-dialog>
 
+    <!--绑定
+            -->
     <el-dialog title="绑定设备"
                :visible.sync="bindDeviceDialogFormVisible"
                @close="bindDeviceDialogCancel">
@@ -295,6 +314,20 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="bindDeviceDialogCancel">取 消</el-button>
         <el-button type="primary" @click="bindDeviceAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+<!--    设备关锁密码验证-->
+    <el-dialog title="开锁密码校验"
+               :visible.sync="lockPasswordDialogVisible"
+              >
+      <el-input show-password
+               style="width: 250px"
+                placeholder="请输入开锁密码"
+                v-model="lockPassword"/>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="lockPasswordDialogAffirm">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -383,10 +416,61 @@ export default {
         clientId:'',
         clientBindNewDevice:[]
       },
+
+      lockPassword:"",
+      lockPasswordDialogVisible:false,
+      row:{},
     }
 
   },
   methods: {
+    //快关锁操作
+    async switchChange(row) {
+      console.log();
+      this.row = row
+      if (row.lock == 0) {
+        this.lockPasswordDialogVisible = true
+        setTimeout(
+            function (){
+             row.status = 1
+            },5000
+        )
+      }
+
+    if (row.lock == 1){
+      row.status = 0
+      const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
+      if (res.code == 200) {
+        this.$message.success("上锁成功！")
+
+      } else {
+        this.$message.error("上锁失败！")
+      }
+    }
+
+
+    },
+
+
+    //确认密码
+    async lockPasswordDialogAffirm() {
+      if (this.row.lockPassword == this.lockPassword) {
+        console.log(this.row);
+        //发送后端请求
+        const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
+        if (res.code == 200) {
+          console.log(res);
+          this.$message.success("关锁成功！")
+          this.lockPasswordDialogVisible = false
+          this.lockPassword = ""
+        } else {
+          this.$message.error("密码校验失败！")
+        }
+      }
+
+    },
+
+
     //客户绑定设备
     bindDevice(row) {
       // console.log(row);
@@ -439,8 +523,15 @@ export default {
       await this.getClientList()
     },
     //删除客户
-    deleteClient(clientId) {
+    async deleteClient(clientId) {
       console.log(clientId);
+      const {data: res} = await this.$http.delete("/rc/client/deleteClient", {params: {clientId: clientId}});
+      if (res.code ==   200){
+        this.$message.success(res.message)
+        await this.getClientList()
+      }else {
+        this.$message.error(res.message)
+      }
     },
 
 
@@ -571,6 +662,9 @@ export default {
       this.getClientList();
       console.log(`当前页: ${val}`);
     },
+
+
+
 
   }
 }

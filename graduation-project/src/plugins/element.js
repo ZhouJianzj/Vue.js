@@ -4,9 +4,11 @@ import {Message,Form,FormItem,Button,Input,Header,Aside,Main,Container,
 Menu,MenuItem,Submenu,Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
     Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox,Tag,DatePicker
     ,Result,Dropdown,DropdownItem,DropdownMenu,Steps,Step
-,Avatar,Image} from "element-ui";
+,Avatar,Image,Switch
 
+} from "element-ui";
 
+Vue.use(Switch)
 Vue.use(Steps)
 Vue.use(Step)
 Vue.use(DropdownMenu)
