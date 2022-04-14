@@ -19,7 +19,7 @@
           <el-button type="primary" @click="add">添加</el-button>
         </el-col>
 
-        <el-table :data="devices" stripe border style="width: 100%"   height="500">
+        <el-table :data="devices" stripe border style="width: 100%" height="500">
           <el-table-column type="expand">
             <template slot-scope="props">
               <div v-if="props.row.videos.length != 0">
@@ -118,7 +118,7 @@
               label="操作"
               fixed="right">
             <template slot-scope="operation">
-              <el-button v-if="operation.row.videos.length === 0" size="small" @click="bindVideo()">
+              <el-button v-if="operation.row.videos.length === 0" size="small" @click="bindVideo(operation.row)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-bangdingjilu"></use>
                 </svg>
@@ -131,7 +131,7 @@
               </el-button>
 
               <el-button type="danger" icon="el-icon-delete" size="small"
-                         @click="deleteDevice()">
+                         @click="deleteDevice(operation.row.id)">
               </el-button>
             </template>
           </el-table-column>
@@ -152,7 +152,76 @@
       </el-row>
     </el-card>
 
+    <!--添加设备
+        -->
+    <el-dialog title="添加设备"
+               :visible.sync="addDeviceDialogFormVisible"
+               @close="addDeviceDialogCancel">
+      <el-form :model="addForm"
+               label-width="153px">
 
+        <el-form-item label="设备编号">
+          <div align="left">
+            <el-input v-model="addForm.id" style="width: 60%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="设备名称">
+          <div align="left">
+            <el-input v-model="addForm.name" style="width: 60%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="设备描述">
+          <div align="left">
+            <el-input v-model="addForm.desc" style="width: 60%;"></el-input>
+          </div>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addDeviceDialogCancel">取 消</el-button>
+        <el-button type="primary" @click="addDeviceDialogAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--绑定摄像头
+    -->
+    <el-dialog title="绑定摄像头"
+               :visible.sync="bindVideoDialogFormVisible"
+               @close="bindVideoDialogCancel">
+      <el-form :model="bindForm"
+               label-width="153px">
+
+        <el-form-item label="设备编号">
+          <div align="left">
+            <el-input v-model="bindForm.deviceId" disabled style="width: 30%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="设备名称">
+          <div align="left">
+            <el-input v-model="bindForm.name" disabled style="width: 30%;"></el-input>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="需要绑定设备">
+          <div align="left">
+            <el-select v-model="bindForm.videoId"
+                       placeholder="请选择">
+              <el-option :label="video.name" :value="video.id"
+                         v-for="video in videosHasNoDevice">
+              </el-option>
+            </el-select>
+          </div>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="bindVideoDialogCancel">取 消</el-button>
+        <el-button type="primary" @click="bindVideoDialogAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -169,11 +238,43 @@ export default {
         pageSize: 8,
         pageNum: 1
       },
-      total:0,
-      devices: []
+      total: 0,
+      devices: [],
+
+      addDeviceDialogFormVisible: false,
+      addForm: {},
+
+      bindVideoDialogFormVisible: false,
+      bindForm: {},
+      videosHasNoDevice: []
     }
   },
   methods: {
+
+
+    //添加设备对话框操作
+    add() {
+      this.addDeviceDialogFormVisible = true
+    },
+
+    addDeviceDialogCancel() {
+      this.addDeviceDialogFormVisible = false
+      this.addForm = {}
+    },
+
+    async addDeviceDialogAffirm() {
+      console.log(this.addForm);
+      const {data: res} = await this.$http.post("/rc/device/addDevice", this.addForm);
+      if (res.code == 200) {
+        this.$message.success(res.message)
+        this.addDeviceDialogCancel()
+        await this.getDevices()
+      } else {
+        this.$message.error(res.message)
+      }
+    },
+
+
     async getDevices() {
       const {data: res} = await this.$http.post("/rc/device/getDevices", this.deviceQueryInfo);
       // console.log(res.result);
@@ -191,18 +292,48 @@ export default {
       this.getDevices()
     },
 
-    add() {
+
+    bindVideo(row) {
+      console.log(row);
+      this.bindVideoDialogFormVisible = true
+    },
+    bindVideoDialogCancel() {
+      this.bindVideoDialogFormVisible = false
+      this.bindForm = {}
+      this.videosHasNoDevice = []
+    },
+    bindVideoDialogAffirm() {
 
     },
-    bindVideo() {
-    },
-    removeBind(video){
-      console.log(video);
-    },
-    deleteDevice() {
+    getHasNoDeviceVideo() {
+
     },
 
 
+    async removeBind(video) {
+      const params = {
+        deviceId: video.deviceId,
+        videoId: video.id
+      }
+      const {data: res} = await this.$http.put("/rc/device/removeBindVideo", params);
+      if (res.code == 200) {
+        this.$message.success(res.message)
+        await this.getDevices()
+      } else {
+        this.$message.error(res.message)
+      }
+    },
+
+    //删除设备
+    async deleteDevice(id) {
+      const {data: res} = await this.$http.delete("/rc/device/deleteDevice", {params: {id: id}});
+      if (res.code == 200) {
+        this.$message.success(res.message)
+        await this.getDevices()
+      } else {
+        this.$message.error(res.message)
+      }
+    },
 
 
     //分页
