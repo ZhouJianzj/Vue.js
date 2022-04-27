@@ -3,11 +3,13 @@ import Vue from 'vue'
 import {Message,Form,FormItem,Button,Input,Header,Aside,Main,Container,
 Menu,MenuItem,Submenu,Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
     Pagination,Carousel,CarouselItem,Dialog,Select,Option,MessageBox,Tag,DatePicker
-    ,Result,Dropdown,DropdownItem,DropdownMenu,Steps,Step
+    ,Result,Dropdown,DropdownItem,DropdownMenu,Steps,Step,Loading,Transfer
 ,Avatar,Image,Switch
 
 } from "element-ui";
 
+Vue.use(Transfer)
+Vue.use(Loading)
 Vue.use(Switch)
 Vue.use(Steps)
 Vue.use(Step)

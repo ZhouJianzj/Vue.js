@@ -256,12 +256,10 @@ export default {
     add() {
       this.addDeviceDialogFormVisible = true
     },
-
     addDeviceDialogCancel() {
       this.addDeviceDialogFormVisible = false
       this.addForm = {}
     },
-
     async addDeviceDialogAffirm() {
       console.log(this.addForm);
       const {data: res} = await this.$http.post("/rc/device/addDevice", this.addForm);
@@ -284,7 +282,6 @@ export default {
 
       }
     },
-
     clearSearch() {
       this.getDevices()
     },
@@ -293,8 +290,14 @@ export default {
     },
 
 
-    bindVideo(row) {
-      console.log(row);
+    //摄像头绑定设备
+    async bindVideo(row) {
+      this.bindForm.deviceId = row.id
+      this.bindForm.name = row.name
+      const {data: res} = await this.$http.get("/rc/video/getVideoHasNoDevice");
+      if (res.code == 200){
+        this.videosHasNoDevice = res.result
+      }
       this.bindVideoDialogFormVisible = true
     },
     bindVideoDialogCancel() {
@@ -302,14 +305,20 @@ export default {
       this.bindForm = {}
       this.videosHasNoDevice = []
     },
-    bindVideoDialogAffirm() {
-
+    async bindVideoDialogAffirm() {
+      console.log(this.bindForm);
+      const {data: res} = await this.$http.put("/rc/device/bindVideo", this.bindForm);
+      if (res.code == 200) {
+        this.$message.success(res.message)
+        this.bindVideoDialogCancel()
+        await this.getDevices()
+      } else {
+        this.$message.error(res.message)
+      }
     },
-    getHasNoDeviceVideo() {
-
-    },
 
 
+    //摄像头解绑设备
     async removeBind(video) {
       const params = {
         deviceId: video.deviceId,

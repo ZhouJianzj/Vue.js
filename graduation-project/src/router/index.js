@@ -14,6 +14,7 @@ import device from "../components/remote-control/device";
 import lockService from "../components/remote-control/lock-service"
 import history from "../components/video-monitor/history";
 import monitor from "../components/video-monitor/monitor";
+import topicView from "../components/remote-control/topicView";
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,6 +37,7 @@ const routes = [
 
       {path: '/history', component: history },
       {path: '/monitor', component: monitor },
+      {path: '/topic', component: topicView },
     ]
   }
 

@@ -95,7 +95,8 @@
                         inactive-value="0"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
-                        @change="switchChange(switchScope.row)">
+                        @change="switchChange(switchScope.row)"
+                               @click="openFullScreen2">
                     </el-switch>
                   </template>
                 </el-table-column>
@@ -424,6 +425,20 @@ export default {
 
   },
   methods: {
+
+    openFullScreen2() {
+
+      const loading = this.$loading({
+        lock: true,
+        text: '拼命加载中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 2000);
+    },
+
     //快关锁操作
     async switchChange(row) {
       console.log();
