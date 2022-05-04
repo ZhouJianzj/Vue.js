@@ -106,6 +106,18 @@
         <el-button type="primary" @click="addAffirm">确 定</el-button>
       </div>
     </el-dialog>
+
+
+    <!--    监控设备名称修改-->
+    <el-dialog title="监控设备接入"
+               :visible.sync="modifyVideoDialogVisible"
+    >
+      <el-input placeholder="设备名称" v-model="deviceName"/>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addCancel">取 消</el-button>
+        <el-button type="primary" @click="modifyAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -128,9 +140,14 @@ export default {
 
       accessToken: "",
       addVideoDialogVisible: false,
+      modifyVideoDialogVisible:false,
 
       deviceSerial: "",
-      validateCode: ""
+      validateCode: "",
+
+      deviceName:"",
+      row:{}
+
     }
   },
   methods: {
@@ -174,9 +191,13 @@ export default {
       this.addVideoDialogVisible = false
       this.deviceSerial = ""
       this.validateCode = ""
+      this.deviceName = ""
+      this.modifyVideoDialogVisible = false
+      this.row = {}
     },
     async addAffirm() {
-      const {data: res} = await this.$http.post("", {
+      // BDYOZF
+      const {data: res} = await this.$http.post("/vm/addVideo", {
         accessToken: this.accessToken,
         deviceSerial: this.deviceSerial,
         validateCode: this.validateCode
@@ -184,29 +205,48 @@ export default {
       if (res.code == "200") {
         this.$message.success(res.msg)
         this.addCancel()
+        this.$router.go(0)
       } else {
         this.$message.error(res.msg)
       }
     },
 
 
-    modify(row) {
-      console.log(row);
+    modify(row){
+      this.modifyVideoDialogVisible = true
+      this.row = row
     },
-     deleteVideo(deviceSerial) {
-       console.log(deviceSerial);
 
+    async modifyAffirm() {
 
-       // const {data: res} = await this.$http.post("", {
-      //   accessToken: this.accessToken,
-      //   deviceSerial: video
-      // });
-      // if (res.code == "200") {
-      //   this.$message.success(res.msg)
-      // } else {
-      //   this.$message.error(res.msg)
-      // }
+      const {data: res} = await this.$http.post("/vm/modifyVideo", {
+        accessToken: this.accessToken,
+        deviceSerial: this.row.deviceSerial,
+        deviceName:this.deviceName
+      });
+      if (res.code == "200") {
+
+        this.$message.success(res.msg)
+        this.$router.go(0)
+        this.addCancel()
+      } else {
+        this.$message.error(res.msg)
+      }
+
     },
+     async deleteVideo(deviceSerial) {
+       const {data: res} = await this.$http.post("/vm/deleteVideo", {
+         accessToken: this.accessToken,
+         deviceSerial: deviceSerial
+       });
+       if (res.code == "200") {
+
+         this.$message.success(res.msg)
+         this.$router.go(0)
+       } else {
+         this.$message.error(res.msg)
+       }
+     },
 
 
     //分页
