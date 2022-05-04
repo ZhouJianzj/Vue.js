@@ -14,7 +14,7 @@
         </el-col>
 
         <el-col :span="4">
-          <el-button type="primary" @click="add">添加</el-button>
+          <el-button type="primary" @click="add">监控接入</el-button>
         </el-col>
 
         <el-table
@@ -25,46 +25,58 @@
         >
 
           <el-table-column
-              prop="name"
-              label="姓名"
+              prop="deviceSerial"
+              label="监控设备序列号"
               sortable
               width="100">
           </el-table-column>
           <el-table-column
-              prop="phone"
-              label="手机号">
+              prop="deviceName"
+              label="监控设备名称">
           </el-table-column>
           <el-table-column
-              prop="email"
-              label="邮箱">
+              prop="deviceType"
+              label="监控设备类型">
           </el-table-column>
 
           <el-table-column
-              prop="ccName"
-              label="委托人/债权人"
+              prop="status"
+              label="监控设备状态"
               width="100">
           </el-table-column>
 
           <el-table-column
-              prop="ccPhone"
-              label="委托人/债权人手机号">
+              prop="defence"
+              label="设备布撤防状态">
           </el-table-column>
 
           <el-table-column
-              prop="ccEmail"
-              label="委托人/债权人邮箱">
+              prop="deviceVersion"
+              label="设备版本号">
           </el-table-column>
 
           <el-table-column
-              prop="createTime"
+              prop="addTime"
               label="创建时间">
+          </el-table-column>
+
+          <el-table-column
+              prop="updateTime"
+              label="更新时间">
           </el-table-column>
 
 
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
-              <el-button type="warning" icon="el-icon-edit" size="small" @click="modify(scope.row)"></el-button>
-              <el-button type="danger" icon="el-icon-delete" size="small" @click="delete(scope.row.id)"></el-button>
+              <el-button type="warning" icon="el-icon-edit" size="small"
+                         @click="modify(scope.row)">
+
+              </el-button>
+              <el-button type="danger" icon="el-icon-delete" size="small"
+                         @click="deleteVideo(scope.row.deviceSerial)">
+
+              </el-button>
+
             </template>
           </el-table-column>
         </el-table>
@@ -81,6 +93,19 @@
 
       </el-row>
     </el-card>
+
+    <!--    监控设备接入-->
+    <el-dialog title="监控设备接入"
+               :visible.sync="addVideoDialogVisible"
+    >
+      <el-input placeholder="设备序列号" v-model="deviceSerial"/>
+      <br><br>
+      <el-input placeholder="验证码" v-model="validateCode"/>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addCancel">取 消</el-button>
+        <el-button type="primary" @click="addAffirm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -88,7 +113,7 @@
 <script>
 export default {
   created() {
-    this.getVideos()
+    this.getAccessToken()
   },
   name: "monitor",
   data() {
@@ -101,21 +126,86 @@ export default {
       total: 0,
       videos: [],
 
+      accessToken: "",
+      addVideoDialogVisible: false,
+
+      deviceSerial: "",
+      validateCode: ""
     }
   },
   methods: {
-    getVideos() {
+    async getAccessToken() {
+      const {data: res} = await this.$http.post("/vm/getAccessToken");
+      if (res.code == "200") {
+        this.accessToken = res.data.accessToken
+        const {data: res1} = await this.$http.post("/vm/getVideos", {
+          accessToken: res.data.accessToken
+        });
+        if (res1.code == "200") {
+          this.videos = res1.data
+        } else {
+          this.$message.error(res1.msg)
+        }
+      } else {
+        this.$message.error(res.msg)
+      }
+    },
+    clearSearch() {
+      this.query.key = ""
+    },
+    async search() {
+      const {data: res} = await this.$http.post("/vm/searchVideo", {
+        accessToken: this.accessToken,
+        deviceSerial: this.query.key
+      });
+      if (res.code == "200") {
+        this.videos = []
+        this.videos.push(res.data)
+        this.$message.success(res.msg)
+      } else {
+        this.$message.error(res.msg)
+      }
+
+    },
+    async add() {
+      this.addVideoDialogVisible = true
+    },
+    addCancel() {
+      this.addVideoDialogVisible = false
+      this.deviceSerial = ""
+      this.validateCode = ""
+    },
+    async addAffirm() {
+      const {data: res} = await this.$http.post("", {
+        accessToken: this.accessToken,
+        deviceSerial: this.deviceSerial,
+        validateCode: this.validateCode
+      });
+      if (res.code == "200") {
+        this.$message.success(res.msg)
+        this.addCancel()
+      } else {
+        this.$message.error(res.msg)
+      }
     },
 
-    clearSearch() {
+
+    modify(row) {
+      console.log(row);
     },
-    search() {
-    },
-    add() {
-    },
-    modify() {
-    },
-    delete() {
+     deleteVideo(deviceSerial) {
+       console.log(deviceSerial);
+
+
+       // const {data: res} = await this.$http.post("", {
+      //   accessToken: this.accessToken,
+      //   deviceSerial: video
+      // });
+      // if (res.code == "200") {
+      //   this.$message.success(res.msg)
+      // } else {
+      //   this.$message.error(res.msg)
+      // }
     },
 
 
