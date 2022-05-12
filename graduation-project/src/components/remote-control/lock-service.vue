@@ -10,7 +10,7 @@
 
 <!--      <el-row >-->
 <!--        <el-col>-->
-          <div >
+          <div class="edit_dev">
             <el-transfer
                 v-model="value"
                 :data="data"
@@ -133,6 +133,7 @@ export default {
   margin-top: 20px;
 }
 
-
-
+.edit_dev >>> .el-transfer-panel {
+  width:500px;
+}
 </style>
