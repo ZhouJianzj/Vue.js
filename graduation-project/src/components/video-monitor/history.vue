@@ -6,24 +6,23 @@
       <el-breadcrumb-item>监控画面</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card>
-      <div align="left" id="video-container"></div>
-    </el-card>
-    <!--      <div>-->
-    <!--        <button onClick="play()">play</button>-->
-    <!--        <button onClick="stop()">stop</button>-->
-    <!--        <button onClick="getOSDTime()">getOSDTime</button>-->
-    <!--        <button onClick="getOSDTime2()">getOSDTime2</button>-->
-    <!--        <button onClick="capturePicture()">capturePicture</button>-->
-    <!--        <button onClick="openSound()">openSound</button>-->
-    <!--        <button onClick="closeSound()">closeSound</button>-->
-    <!--        <button onClick="startSave()">startSave</button>-->
-    <!--        <button onClick="stopSave()">stopSave</button>-->
-    <!--        <button onClick="ezopenStartTalk()">开始对讲</button>-->
-    <!--        <button onClick="ezopenStopTalk()">结束对讲</button>-->
-    <!--        <button onClick="fullScreen()">全屏</button>-->
-    <!--      </div>-->
 
+    <el-row>
+      <el-col :span="8" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 2 : 0">
+        <el-card :body-style="{ padding: '0px' }" style="width: 500px">
+          <div class="image" id="video-container" v-show="show"></div>
+          <div align="left" id="ysopen" v-show="showRec"></div>
+
+          <div style="padding: 2px;">
+            <span>监控设备</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ Date.now() }}</time>
+              <el-button id="buttonCheck" type="text" class="button" @click="videoRec">查看回放</el-button>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -32,35 +31,93 @@
 import EZUIKit from 'ezuikit-js';
 
 var player = null;
+var playr = null;
+
 export default {
   name: "history",
 
   mounted: () => {
-    console.group("mounted 组件挂载完毕状态===============》");
-    fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+    // console.group("mounted 组件挂载完毕状态===============》");
+    // const res = this.$http.post("/vm/getAccessToken");
+    // console.log(res);
+
+    fetch('http://localhost/vm/getAccessToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "token": window.sessionStorage.getItem("token")
+      }
+    })
         .then(response => response.json())
         .then(res => {
+          console.log(res);
           var accessToken = res.data.accessToken;
+
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken: accessToken,
-            url: "ezopen://open.ys7.com/C78957921/1.live",
+            url: "ezopen://open.ys7.com/G82446190/1.hd.live",
             template: 'theme',//
             autoplay: true,
             plugin: ['talk'],// 加载插件，talk-对讲
-            startTalk:()=> this.playr.startTalk(),
-            stopTalk: ()=> this.playr.stopTalk(),
-            width: 400,
-            height:266,
+            startTalk: () => this.playr.startTalk(),
+            stopTalk: () => this.playr.stopTalk(),
+            width: 499,
+            height: 320,
           });
+
+
         });
+
+
   },
 
   data() {
-    return {}
+    return {
+      show:true,
+      showRec:false
+    }
   },
 
-  methods: {},
+  methods: {
+    //查看回放按钮事件
+    videoRec() {
+      if (document.getElementById("buttonCheck").innerText == "查看回放"){
+        this.show = false
+        this.showRec = true
+        document.getElementById("buttonCheck").innerText = "直播视频"
+        fetch('http://localhost/vm/getAccessToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            "token": window.sessionStorage.getItem("token")
+          }
+        })
+            .then(response => response.json())
+            .then(res => {
+              var accessToken = res.data.accessToken;
+              // 回放播放器初始化
+              playr = new EZUIKit.EZUIKitPlayer({
+                id: "ysopen", // 视频容器ID
+                accessToken: accessToken,
+                url: "ezopen://open.ys7.com/G82446190/1.cloud.rec",
+                template: 'theme',//
+                autoplay: true,
+                plugin: ['talk'],// 加载插件，talk-对讲
+                startTalk: () => this.playr.startTalk(),
+                stopTalk: () => this.playr.stopTalk(),
+                width: 500,
+                height: 320,
+              });
+            });
+      }else {
+        this.show = true
+        this.showRec = false
+        document.getElementById("buttonCheck").innerText = "直播视频"
+      }
+
+    }
+  }
 
 }
 </script>
@@ -92,5 +149,35 @@ export default {
 
 .el-pagination {
   margin-top: 20px;
+}
+
+.time {
+  font-size: 13px;
+  color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both
 }
 </style>
