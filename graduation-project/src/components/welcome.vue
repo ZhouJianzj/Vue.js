@@ -1,7 +1,7 @@
 <template>
 <div>
 
-  <iframe src="http://10.90.15.202/vision/cloudconfig/custom/previews/display.html?tag=displays/demo-app-zj/gb-zj.json&visionId=689479423165988864"
+  <iframe src="https://appdevelop.czjy.hanyunapp.cn/vision/cloudconfig/custom/previews/display.html?tag=displays/demo-app-zj/gb-zj.json&visionId=689479423165988864"
           style="height: 100vh;width: 100%"></iframe>
 <!--  <el-carousel :interval="4000" type="card" height="200px">-->
 <!--    <el-carousel-item>-->

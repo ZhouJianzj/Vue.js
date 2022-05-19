@@ -12,9 +12,9 @@
 <!--        <el-col>-->
           <div class="edit_dev">
             <el-transfer
+                filter-placeholder="请输入关键字"
                 v-model="value"
                 :data="data"
-                align="center"
                 filterable
                 :titles="['资源', '摄像头、设备、客户']"
             >
@@ -56,7 +56,6 @@
 </template>
 
 <script>
-
 
 export default {
   name: "lock-service",
@@ -136,4 +135,6 @@ export default {
 .edit_dev >>> .el-transfer-panel {
   width:500px;
 }
+
+
 </style>

@@ -89,13 +89,12 @@
                     label="开/关锁">
                   <template slot-scope="switchScope">
                     <el-switch ref="switchRef"
-                        v-if="switchScope.row.lock != null"
-                        v-model="switchScope.row.lock"
-                        active-value="1"
-                        inactive-value="0"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        @change="switchChange(switchScope.row)"
+                               v-if="switchScope.row.lock != null"
+                               v-model="switchScope.row.switch"
+
+                               active-color="#13ce66"
+                               inactive-color="#ff4949"
+                               @change="switchChange(switchScope.row)"
                                @click="openFullScreen2">
                     </el-switch>
                   </template>
@@ -285,7 +284,7 @@
     <el-dialog title="绑定设备"
                :visible.sync="bindDeviceDialogFormVisible"
                @close="bindDeviceDialogCancel">
-      <el-form  :model="bindForm"
+      <el-form :model="bindForm"
                label-width="153px">
 
         <el-form-item label="客户编号">
@@ -300,12 +299,12 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="需要绑定设备" >
+        <el-form-item label="需要绑定设备">
           <div align="left">
             <el-select v-model="bindForm.clientBindNewDevice"
-                       multiple placeholder="请选择" >
+                       multiple placeholder="请选择">
               <el-option :label="video.name" :value="video.id"
-                         v-for="video in devicesHasNoClient" >
+                         v-for="video in devicesHasNoClient">
               </el-option>
             </el-select>
           </div>
@@ -319,12 +318,12 @@
     </el-dialog>
 
 
-<!--    设备关锁密码验证-->
+    <!--    设备关锁密码验证-->
     <el-dialog title="开锁密码校验"
                :visible.sync="lockPasswordDialogVisible"
-              >
+    >
       <el-input show-password
-               style="width: 250px"
+                style="width: 250px"
                 placeholder="请输入开锁密码"
                 v-model="lockPassword"/>
       <div slot="footer" class="dialog-footer">
@@ -411,16 +410,16 @@ export default {
       suffixIcon4: "",
 
       selectRow: {},
-      devicesHasNoClient:[],
+      devicesHasNoClient: [],
       bindDeviceDialogFormVisible: false,
-      bindForm:{
-        clientId:'',
-        clientBindNewDevice:[]
+      bindForm: {
+        clientId: '',
+        clientBindNewDevice: []
       },
 
-      lockPassword:"",
-      lockPasswordDialogVisible:false,
-      row:{},
+      lockPassword: "",
+      lockPasswordDialogVisible: false,
+      row: {},
     }
 
   },
@@ -441,36 +440,29 @@ export default {
 
     //快关锁操作
     async switchChange(row) {
-      console.log();
+
       this.row = row
-      if (row.lock == 0) {
+      console.log(this.row);
+      if (row.switch == false) {
         this.lockPasswordDialogVisible = true
-        setTimeout(
-            function (){
-             row.status = 1
-            },5000
-        )
       }
-
-    if (row.lock == 1){
-      row.status = 0
-      const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
-      if (res.code == 200) {
-        this.$message.success("上锁成功！")
-
-      } else {
-        this.$message.error("上锁失败！")
+      if (this.switch == true) {
+        this.row.lock = 1
+        const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
+        if (res.code == 200) {
+          this.$message.success("上锁成功！")
+        } else {
+          this.$message.error("上锁失败！")
+        }
       }
-    }
-
-
     },
 
 
     //确认密码
     async lockPasswordDialogAffirm() {
       if (this.row.lockPassword == this.lockPassword) {
-        console.log(this.row);
+        this.row.lock = 0
+       
         //发送后端请求
         const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
         if (res.code == 200) {
@@ -478,6 +470,7 @@ export default {
           this.$message.success("关锁成功！")
           this.lockPasswordDialogVisible = false
           this.lockPassword = ""
+          await this.getClientList()
         } else {
           this.$message.error("密码校验失败！")
         }
@@ -504,9 +497,9 @@ export default {
     //对话提交
     async bindDeviceAffirm() {
       const {data: res} = await this.$http.post("/rc/client/clientBindDevice", this.bindForm)
-      if (res.code === 200){
+      if (res.code === 200) {
         this.$message.success("设备绑定客户成功！")
-      }else {
+      } else {
         this.$message.error("设备绑定客户失败！")
       }
       this.bindDeviceDialogCancel()
@@ -517,9 +510,9 @@ export default {
     async getDeviceNoBindClient() {
       const {data: res} = await this.$http.post("/rc/device/getDeviceNoBindClient")
       console.log(res);
-      if (res.code === 200){
+      if (res.code === 200) {
         this.devicesHasNoClient = res.result
-      }else {
+      } else {
         this.$message.error("查询所有没有绑定客户的设备失败！")
       }
     },
@@ -530,9 +523,9 @@ export default {
         clientId: clientId,
         deviceId: deviceId
       })
-      if(res.code === 200){
+      if (res.code === 200) {
         this.$message.success(res.message)
-      }else {
+      } else {
         this.$message.error(res.message)
       }
       await this.getClientList()
@@ -541,10 +534,10 @@ export default {
     async deleteClient(clientId) {
       console.log(clientId);
       const {data: res} = await this.$http.delete("/rc/client/deleteClient", {params: {clientId: clientId}});
-      if (res.code ==   200){
+      if (res.code == 200) {
         this.$message.success(res.message)
         await this.getClientList()
-      }else {
+      } else {
         this.$message.error(res.message)
       }
     },
@@ -555,6 +548,7 @@ export default {
       const {data: res} = await this.$http.post('/rc/client/getClientInfo', this.query)
       if (res.code === 200 && res.result != null) {
         this.clientList = res.result.list
+        console.log(this.clientList);
         this.total = res.result.total
       }
     },
@@ -582,7 +576,6 @@ export default {
     },
     async addDialogAffirm() {
       const {data: res} = await this.$http.post("/rc/client/addClient", this.addForm)
-      console.log(res);
       if (res.code == 200) {
         this.$message.success(res.message)
         this.addDialogFormVisible = false
@@ -677,8 +670,6 @@ export default {
       this.getClientList();
       console.log(`当前页: ${val}`);
     },
-
-
 
 
   }
