@@ -440,13 +440,13 @@ export default {
 
     //快关锁操作
     async switchChange(row) {
-
       this.row = row
       console.log(this.row);
+
       if (row.switch == false) {
         this.lockPasswordDialogVisible = true
       }
-      if (this.switch == true) {
+      if (row.switch == true) {
         this.row.lock = 1
         const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
         if (res.code == 200) {
@@ -462,11 +462,11 @@ export default {
     async lockPasswordDialogAffirm() {
       if (this.row.lockPassword == this.lockPassword) {
         this.row.lock = 0
-       
+
         //发送后端请求
         const {data: res} = await this.$http.put("/rc/device/updateDevice", this.row);
         if (res.code == 200) {
-          console.log(res);
+          // console.log(res);
           this.$message.success("关锁成功！")
           this.lockPasswordDialogVisible = false
           this.lockPassword = ""

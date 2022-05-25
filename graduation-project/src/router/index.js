@@ -38,6 +38,11 @@ const routes = [
       {path: '/history', component: history },
       {path: '/monitor', component: monitor },
       {path: '/topic', component: topicView },
+      {path: '/dc', redirect: to => {
+          window.open('https://appdevelop.czjy.hanyunapp.cn/moc/access/machine/variateConfig', '_bank')
+        }
+      },
+
     ]
   }
 
