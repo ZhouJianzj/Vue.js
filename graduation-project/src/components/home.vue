@@ -3,7 +3,7 @@
   <el-container class="home_container">
     <el-header>
       <div class="head_pic">
-        <img src="../assets/pig1.png">
+        <img src="../assets/logo.png">
         <span>港机视频监控和远程控制界面</span>
 
       </div>
@@ -25,9 +25,9 @@
 
       <el-aside :width="isCollapse? '64px': '200px'">
         <div class="toggle-button" @click="isCollapse_method">...</div>
-        <el-menu background-color="#222222"
-                 text-color="#fff"
-                 active-text-color="#ffd04b"
+        <el-menu background-color="#ffffff"
+                 text-color="#2b2b2b"
+                 active-text-color="#3cc8b4"
                  :unique-opened="true"
                  :collapse="isCollapse"
                  :collapse-transition="false"
@@ -287,7 +287,7 @@ export default {
 <style scoped>
 
 .el-header {
-  background-color: #333333;
+  background-color: #3cc8b4;
   display: flex;
   /*两边对齐*/
   justify-content: space-between;
@@ -308,11 +308,11 @@ span {
 }
 
 .el-main {
-  background-color: #b3d4fc;
+  background-color: #ffffff;
 }
 
 .el-aside {
-  background-color: #222222;
+  background-color: #ffffff;
 }
 
 .el-menu {
@@ -326,7 +326,7 @@ span {
 /*折叠*/
 .toggle-button {
   line-height: 22px;
-  color: #b3d4fc;
+  color: #1b1b1b;
   /*指定文本间的间距大小*/
   letter-spacing: 0.2em;
   /*指定光标为一个小手*/

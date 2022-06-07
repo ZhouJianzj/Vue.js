@@ -42,7 +42,7 @@ export default {
     return{
       picPath:require("../assets/gk1.jpg"),
       form:{
-        username:'zhoujian',
+        username:'SHOUQIAN',
         password:'123321'
       },
       // 验证规则属性,使用到rules和prop,需要和标签绑定的数据名字一致
