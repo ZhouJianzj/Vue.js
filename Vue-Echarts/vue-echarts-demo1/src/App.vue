@@ -6,6 +6,10 @@
     <div id="three"></div>
     <div id="four"></div>
     <div id="five"></div>
+    <div ref="scatter" id="scatter"></div>
+    <div id="candlestick"></div>
+    <div id="radar"></div>
+    <div id="funnel"></div>
   </div>
 </template>
 <script>
@@ -17,7 +21,33 @@ export default {
     this.demoPie()
     this.demoLineTwo()
     this.demoLineThree()
+    this.demoScatterOne()
+    this.demoCandlestick()
+    this.demoRadar()
+    this.demoFunnel()
   },
+  data(){
+    return{
+      kData:[
+        [20, 34, 10, 38],
+        [40, 35, 30, 50],
+        [31, 38, 33, 44],
+        [38, 15, 5, 42]
+      ]
+    }
+  },
+  // 计算属性
+  computed: {
+    newKData(){
+      // let arr = []
+      // for (let i = 0; i <this.kData.length; i++) {
+      //   arr.push(this.kData[i][0])
+      // }
+      let arr = this.kData.map(V => V[0]);
+      return arr
+    }
+  }
+  ,
   methods: {
     demoOne() {
       // 基于准备好的dom，初始化echarts实例
@@ -101,10 +131,10 @@ export default {
             barWidth: 20,//设置柱状图的宽度
             // color: "red",//设置柱状图的颜色
 
-            itemStyle:{ //设置柱状图的颜色每一个都不同
-              normal:{
-                color:function (params){
-                  let colorList = ["#c33444","#433333","#656564"]
+            itemStyle: { //设置柱状图的颜色每一个都不同
+              normal: {
+                color: function (params) {
+                  let colorList = ["#c33444", "#433333", "#656564"]
                   return colorList[params.dataIndex]
                 }
               }
@@ -148,7 +178,7 @@ export default {
       })
     },
 
-    demoPie(){
+    demoPie() {
       let chartPie = this.$echarts.init(document.getElementById('three'))
       chartPie.setOption({
         tooltip: {
@@ -157,7 +187,7 @@ export default {
         legend: {
           top: '5%',
           left: 'right',
-          orient:'verical'
+          orient: 'verical'
 
         },
         series: [
@@ -190,19 +220,19 @@ export default {
               show: false
             },
             data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
+              {value: 1048, name: 'Search Engine'},
+              {value: 735, name: 'Direct'},
+              {value: 580, name: 'Email'},
+              {value: 484, name: 'Union Ads'},
+              {value: 300, name: 'Video Ads'}
             ]
           }
         ]
       })
     },
 
-    demoLineTwo(){
-      let line = this.$echarts.init(document.getElementById("four") )
+    demoLineTwo() {
+      let line = this.$echarts.init(document.getElementById("four"))
       line.setOption({
         xAxis: {
           type: 'category',
@@ -217,11 +247,11 @@ export default {
             type: 'line',
             //设置折线图为平滑曲线图
             smooth: true,
-            areaStyle:{},
-            markPoint:{
-              data:[
-                {type:"max",name:"最大值"},
-                {type:"min",name:"最小值"},
+            areaStyle: {},
+            markPoint: {
+              data: [
+                {type: "max", name: "最大值"},
+                {type: "min", name: "最小值"},
               ]
             }
           }
@@ -229,30 +259,33 @@ export default {
       })
     },
 
-    demoLineThree(){
-      let lineThree  = this.$echarts.init(document.getElementById("five"))
+    demoLineThree() {
+      let lineThree = this.$echarts.init(document.getElementById("five"))
       lineThree.setOption({
         color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
         title: {
-          text: 'Gradient Stacked Area Chart'
+          text: 'Gradient'
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             type: 'cross',
+            //坐标轴上的标签颜色
             label: {
-              backgroundColor: '#6a7985'
+              backgroundColor: '#0836d4'
             }
           }
         },
         legend: {
-          data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+          data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5'],
+          left: "center",
         },
         toolbox: {
           feature: {
             saveAsImage: {}
           }
         },
+        //图标离div之间的间距，上下左右
         grid: {
           left: '3%',
           right: '4%',
@@ -275,6 +308,7 @@ export default {
           {
             name: 'Line 1',
             type: 'line',
+            //多个折现的时候使用堆叠的时候需要有一样的stack，这里都是total
             stack: 'Total',
             smooth: true,
             lineStyle: {
@@ -295,10 +329,12 @@ export default {
               ])
             },
             emphasis: {
-              focus: 'series'
+              focus: 'series',
+              scale: true
             },
             data: [140, 232, 101, 264, 90, 340, 250]
           },
+
           {
             name: 'Line 2',
             type: 'line',
@@ -413,7 +449,202 @@ export default {
           }
         ]
       })
+    },
+
+    demoScatterOne() {
+      let scatter = this.$echarts.init(this.$refs.scatter)
+      scatter.setOption({
+        xAxis: {},
+        yAxis: {},
+        tooltip: {},
+        //渐变色
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [{
+            offset: 0, color: 'red' // 0% 处的颜色
+          }, {
+            offset: 1, color: 'blue' // 100% 处的颜色
+          }],
+          global: false // 缺省为 false
+        },
+        series: [
+          {
+            symbolSize: 20,
+            data: [
+              [10.0, 8.04],
+              [8.07, 6.95],
+              [13.0, 7.58],
+              [9.05, 8.81],
+              [11.0, 8.33],
+              [14.0, 7.66],
+              [13.4, 6.81],
+              [10.0, 6.33],
+              [14.0, 8.96],
+              [12.5, 6.82],
+              [9.15, 7.2],
+              [11.5, 7.2],
+              [3.03, 4.23],
+              [12.2, 7.83],
+              [2.02, 4.47],
+              [1.05, 3.33],
+              [4.05, 4.96],
+              [6.03, 7.24],
+              [12.0, 6.26],
+              [12.0, 8.84],
+              [7.08, 5.82],
+              [5.02, 5.68]
+            ],
+            type: 'scatter',
+            emphasis: {
+              focus: 'series',
+              itemStyle: {
+                borderColor: 'green',
+                borderWidth: 10
+              }
+            },
+
+          }
+        ]
+      })
+    },
+
+    demoCandlestick() {
+      let candlestick = this.$echarts.init(document.getElementById("candlestick"))
+      let option = {
+        xAxis: {
+          data: ['2017-10-24', '2017-10-25', '2017-10-26', '2017-10-27']
+        },
+        yAxis: {},
+        series: [
+          {
+            type: 'candlestick',
+            data: this.kData
+          },
+          {
+            type: "line",
+            smooth: true,
+            data: this.newKData
+          }
+
+        ],
+        tooltip: {}
+      }
+      candlestick.setOption(option)
+    },
+
+    demoRadar(){
+      let radar = this.$echarts.init(document.getElementById("radar"))
+      let option = {
+        title: {
+          text: 'Basic Radar Chart'
+        },
+        legend: {
+          data: ['Allocated Budget', 'Actual Spending']
+        },
+        tooltip:{},
+        //设置雷达图坐标系的
+        radar: {
+          // shape: 'circle',
+          indicator: [
+            { name: 'Sales', max: 6500 },
+            { name: 'Administration', max: 16000 },
+            { name: 'Information Technology', max: 30000 },
+            { name: 'Customer Support', max: 38000 },
+            { name: 'Development', max: 52000 },
+            { name: 'Marketing', max: 25000 }
+          ]
+        },
+        series: [
+          {
+            name: 'Budget vs spending',
+            type: 'radar',
+            data: [
+              {
+                value: [4200, 3000, 20000, 35000, 50000, 18000],
+                name: 'Allocated Budget'
+              },
+              {
+                value: [5000, 14000, 28000, 26000, 42000, 21000],
+                name: 'Actual Spending'
+              }
+            ]
+          }
+        ]
+      };
+      radar.setOption(option)
+    },
+
+    demoFunnel(){
+      let funnel = this.$echarts.init(document.getElementById("funnel"))
+      let option = {
+        title: {
+          text: 'Funnel'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c}%'
+        },
+        toolbox: {
+          feature: {
+            dataView: { readOnly: false },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        legend: {
+          data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order']
+        },
+        series: [
+          {
+            name: 'Funnel',
+            type: 'funnel',
+            left: '10%',
+            top: 60,
+            bottom: 60,
+            width: '80%',
+            min: 0,
+            max: 100,
+            minSize: '0%',
+            maxSize: '100%',
+            sort: 'descending',
+            gap: 2,
+            label: {
+              show: true,
+              position: 'inside'
+            },
+            labelLine: {
+              length: 10,
+              lineStyle: {
+                width: 1,
+                type: 'solid'
+              }
+            },
+            itemStyle: {
+              borderColor: '#decaca',
+              borderWidth: 1
+            },
+            emphasis: {
+              label: {
+                fontSize: 70
+              }
+            },
+            data: [
+              { value: 60, name: 'Visit' },
+              { value: 40, name: 'Inquiry' },
+              { value: 20, name: 'Order' },
+              { value: 80, name: 'Click' },
+              { value: 100, name: 'Show' }
+            ]
+          }
+        ]
+      };
+      funnel.setOption(option)
     }
+
 
   }
 }
@@ -431,15 +662,36 @@ export default {
   width: 800px;
   height: 600px;
 }
+
 #three {
   width: 800px;
   height: 600px;
 }
+
 #four {
   width: 800px;
   height: 600px;
 }
+
 #five {
+  width: 800px;
+  height: 600px;
+}
+
+#scatter {
+  width: 800px;
+  height: 600px;
+}
+
+#candlestick {
+  width: 800px;
+  height: 600px;
+}
+#radar{
+  width: 800px;
+  height: 600px;
+}
+#funnel{
   width: 800px;
   height: 600px;
 }
