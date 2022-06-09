@@ -10,6 +10,8 @@
     <div id="candlestick"></div>
     <div id="radar"></div>
     <div id="funnel"></div>
+    <div id="gauge"></div>
+    <div id="graph"></div>
   </div>
 </template>
 <script>
@@ -25,10 +27,12 @@ export default {
     this.demoCandlestick()
     this.demoRadar()
     this.demoFunnel()
+    this.demoGauge()
+    this.demoGraph()
   },
-  data(){
-    return{
-      kData:[
+  data() {
+    return {
+      kData: [
         [20, 34, 10, 38],
         [40, 35, 30, 50],
         [31, 38, 33, 44],
@@ -38,7 +42,7 @@ export default {
   },
   // 计算属性
   computed: {
-    newKData(){
+    newKData() {
       // let arr = []
       // for (let i = 0; i <this.kData.length; i++) {
       //   arr.push(this.kData[i][0])
@@ -536,7 +540,7 @@ export default {
       candlestick.setOption(option)
     },
 
-    demoRadar(){
+    demoRadar() {
       let radar = this.$echarts.init(document.getElementById("radar"))
       let option = {
         title: {
@@ -545,17 +549,17 @@ export default {
         legend: {
           data: ['Allocated Budget', 'Actual Spending']
         },
-        tooltip:{},
+        tooltip: {},
         //设置雷达图坐标系的
         radar: {
           // shape: 'circle',
           indicator: [
-            { name: 'Sales', max: 6500 },
-            { name: 'Administration', max: 16000 },
-            { name: 'Information Technology', max: 30000 },
-            { name: 'Customer Support', max: 38000 },
-            { name: 'Development', max: 52000 },
-            { name: 'Marketing', max: 25000 }
+            {name: 'Sales', max: 6500},
+            {name: 'Administration', max: 16000},
+            {name: 'Information Technology', max: 30000},
+            {name: 'Customer Support', max: 38000},
+            {name: 'Development', max: 52000},
+            {name: 'Marketing', max: 25000}
           ]
         },
         series: [
@@ -578,7 +582,7 @@ export default {
       radar.setOption(option)
     },
 
-    demoFunnel(){
+    demoFunnel() {
       let funnel = this.$echarts.init(document.getElementById("funnel"))
       let option = {
         title: {
@@ -590,7 +594,7 @@ export default {
         },
         toolbox: {
           feature: {
-            dataView: { readOnly: false },
+            dataView: {readOnly: false},
             restore: {},
             saveAsImage: {}
           }
@@ -633,16 +637,150 @@ export default {
               }
             },
             data: [
-              { value: 60, name: 'Visit' },
-              { value: 40, name: 'Inquiry' },
-              { value: 20, name: 'Order' },
-              { value: 80, name: 'Click' },
-              { value: 100, name: 'Show' }
+              {value: 60, name: 'Visit'},
+              {value: 40, name: 'Inquiry'},
+              {value: 20, name: 'Order'},
+              {value: 80, name: 'Click'},
+              {value: 100, name: 'Show'}
             ]
           }
         ]
       };
       funnel.setOption(option)
+    },
+
+    demoGauge() {
+      let gauge = this.$echarts.init(document.getElementById("gauge"))
+      let option = {
+        tooltip: {
+          formatter: '{a} <br/>{b} : {c}%'
+        },
+        series: [
+          {
+            name: 'Pressure',
+            type: 'gauge',
+            //显示仪表盘上的进度条的
+            progress: {
+              show: true
+            },
+            //数字标签的动画
+            detail: {
+              valueAnimation: true,
+              formatter: '{value}'
+            },
+            data: [
+              {
+                value: 50,
+                name: 'SCORE'
+              }
+            ]
+          }
+        ]
+      };
+      gauge.setOption(option)
+    },
+
+    demoGraph() {
+      let graph = this.$echarts.init(document.getElementById("graph"))
+      let option = {
+        title: {
+          text: 'Basic Graph'
+        },
+        tooltip: {},
+        //数据更新动画
+        animationDurationUpdate: 1500,
+        //数据更新动画的缓动效果。
+        animationEasingUpdate: 'quinticInOut',
+        series: [
+          {
+            type: 'graph',
+            layout: 'none',
+            symbolSize: 50,
+            //是否开启鼠标缩放和平移漫游
+            roam: true,
+            label: {
+              show: true,
+              position:"outside"
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            edgeLabel: {
+              fontSize: 20
+            },
+            data: [
+              {
+                name: 'Node 1',
+                x: 300,
+                y: 300
+              },
+              {
+                name: 'Node 2',
+                x: 800,
+                y: 300
+              },
+              {
+                name: 'Node 3',
+                x: 550,
+                y: 100
+              },
+              {
+                name: 'Node 4',
+                x: 550,
+                y: 500
+              }
+            ],
+
+            // links: [],
+            links: [
+              {
+                source: 0,
+                target: 1,
+                //'circle', 'arrow'的大小也就是边的两端图标大小
+                symbolSize: [10, 30],
+                label: {
+                  show: true
+                },
+                lineStyle: {
+                  width: 5,
+                  curveness: 0.2
+                }
+              },
+              {
+                source: 'Node 2',
+                target: 'Node 1',
+                label: {
+                  show: true
+                },
+                lineStyle: {
+                  curveness: 0.2
+                }
+              },
+              {
+                source: 'Node 1',
+                target: 'Node 3'
+              },
+              {
+                source: 'Node 2',
+                target: 'Node 3'
+              },
+              {
+                source: 'Node 2',
+                target: 'Node 4'
+              },
+              {
+                source: 'Node 1',
+                target: 'Node 4'
+              }
+            ],
+            lineStyle: {
+              opacity: 0.9,
+              width: 2,
+              curveness: 0
+            }
+          }
+        ]
+      };
+      graph.setOption(option)
     }
 
 
@@ -687,11 +825,23 @@ export default {
   width: 800px;
   height: 600px;
 }
-#radar{
+
+#radar {
   width: 800px;
   height: 600px;
 }
-#funnel{
+
+#funnel {
+  width: 800px;
+  height: 600px;
+}
+
+#gauge {
+  width: 800px;
+  height: 600px;
+}
+
+#graph {
   width: 800px;
   height: 600px;
 }
