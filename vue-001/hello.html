@@ -6,12 +6,31 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-<div id="div1">{{message}}</div>
+<div id="div1">
+    <span>v-bind数据绑定到视图</span>
+    <button v-on:click="checked">改变数据</button>
+    <input v-bind:value="bindData"/><br>
+    {{bindData}}
+
+    <br><br><br>
+    <span>"v-model 双向绑定"</span>
+    <input v-model="modelData"/><br>
+    {{modelData}}
+
+    <button v-bind:disabled="isShow">button</button>
+</div>
 <script>
     var app = new Vue({
-        el:"#div1",
-        data:{
-            message:"hello  world !"
+        el: "#div1",
+        data: {
+            bindData: "hello  world !",
+            modelData: "zhoujian",
+            isShow: null
+        },
+        methods: {
+            checked(){
+                this.bindData = "checked"
+            }
         }
 
     })

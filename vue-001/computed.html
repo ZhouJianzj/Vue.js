@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="div1">
+    <p>数量:{{num}}</p>
+    <p>单价:{{price}}</p>
+    <p>总价:{{total}}</p>
+    <button @click="num++">增加数量</button>
+    <button @click="num == 0? 0 : num--">减少数量</button>
+    <button @click="doClick">单击</button><br>
+    <p>{{message}}</p>
+
+</div>
+<script>
+    let app = new Vue({
+        el: "#div1",
+        data: {
+            num: 20,
+            price: 10,
+            message:'',
+        },
+        methods:{
+            doClick(){
+                this.message = this.total
+            }
+        },
+        computed:{
+            total(){
+                return this.num * this.price
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

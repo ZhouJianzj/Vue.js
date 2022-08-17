@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+    <p>Original message: "{{ message }}"</p>
+
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+    <p>Method Reversed message: "{{ rm() }}"</p>
+
+    <p>{{fullName}}</p>
+
+    <ul>
+        <li v-for="(item,index) in list" :key="item">
+            {{item}}----{{index}}
+        </li>
+    </ul>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            message: 'Hello',
+            firstName: "z",
+            lastName: "j",
+            list:[1,2,3,4,5,6,7]
+
+
+        },
+        methods: {
+            rm: function () {
+                return this.message.split('').reverse().join('')
+            }
+        },
+        computed: {
+            // 计算属性的 getter
+            reversedMessage: function () {
+                // `this` 指向 vm 实例
+                return this.message.split('').reverse().join('')
+            }
+            ,
+
+            fullName: {
+                // getter
+                get: function () {
+                    return this.firstName + ' ' + this.lastName
+                },
+                // setter
+                set: function (newValue) {
+                    var names = newValue.split(' ')
+                    console.log(names)
+                    this.firstName = names[0]
+                    this.lastName = names[names.length - 1]
+                }
+            }
+
+
+        }
+    })
+</script>
+</body>
+</html>

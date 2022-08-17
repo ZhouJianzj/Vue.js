@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+    <input type="text" placeholder="请输入名称" v-bind:value="inputVal">
+    <button @click="add">ADD</button>
+    <ul>
+        <my-li v-for="(item,index) in todo"
+               :key="item.id"
+               v-bind:thing="item.thing"
+               v-on:remove="todo.splice(index,1)"></my-li>
+    </ul>
+</div>
+<script>
+    Vue.component("my-li",{
+        template:"<li>{{thing}}" +
+            "<button @click=\"$emit('remove')\">Remove</button></li>",
+        props:["thing"]
+    })
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            inputVal: "默认名称",
+            todo: [
+                {
+                    id: 1,
+                    thing: "one"
+                },
+                {
+                    id: 2,
+                    thing: "two"
+                },
+                {
+                    id: 3,
+                    thing: "three"
+                },
+            ]
+        },
+        methods: {
+            add() {
+                this.todo.push({
+                    id: this.todo.length + 1,
+                    thing: this.todo.length + 1
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
