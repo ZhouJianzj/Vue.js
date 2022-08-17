@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="div1">
+    <my-input v-model="msg"></my-input>
+    <alert-box>zhoujian</alert-box>
+</div>
+<script>
+    Vue.component("my-input",{
+        template:"<div><input" +
+            " v-bind:value='value'" +
+            " v-on:input=\"$emit('myInput',$event.target.value)\">" +
+            "</div>",
+        props:["value"]
+    })
+
+    Vue.component('alert-box', {
+        template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>
+  `
+    })
+    var app = new Vue({
+        el: "#div1",
+        data: {
+            msg: "zhoujian"
+
+        },
+        methods: {}
+
+    })
+</script>
+</body>
+</html>

@@ -18,6 +18,34 @@
     {{modelData}}
 
     <button v-bind:disabled="isShow">button</button>
+
+    <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+        Submit
+    </button>
+
+    <button v-on:click.ctrl="onCtrlClick">A</button>
+
+    <br>
+    <select v-model="selected" multiple style="width: 50px;">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <br>
+    <span>Selected: {{ selected }}</span>
+    <br>
+<br>
+    <input
+            type="checkbox"
+            v-model="toggle"
+            true-value="yes"
+            false-value="no"
+    >
+
+
+    <input v-model.lazy="msg">
+    <span>Input:{{msg}}</span>
+
 </div>
 <script>
     var app = new Vue({
@@ -25,12 +53,28 @@
         data: {
             bindData: "hello  world !",
             modelData: "zhoujian",
-            isShow: null
+            isShow: null,
+            selected: [],
+            toggle:"yes",
+            msg: ""
+
         },
         methods: {
+            onCtrlClick(){
+                alert("A")
+            },
+
             checked(){
                 this.bindData = "checked"
+            },
+            warn: function (message, event) {
+                // 现在我们可以访问原生事件对象
+                if (event) {
+                    event.preventDefault()
+                }
+                alert(message)
             }
+
         }
 
     })
