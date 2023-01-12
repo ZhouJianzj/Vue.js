@@ -17,8 +17,10 @@ axios.interceptors.request.use(requestConfig =>{
   requestConfig.headers.username = window.sessionStorage.getItem("username")
   return requestConfig
 })
+
 //挂载axios
 Vue.prototype.$http=axios
+
 //设置axios的默认的请求路径的基本路径
 axios.defaults.baseURL = 'http://localhost'
 
@@ -27,6 +29,9 @@ axios.defaults.baseURL = 'http://localhost'
 import css from './assets/css.css'
 Vue.config.productionTip = false
 
+module.exports = {
+  mode:'production'
+}
 new Vue({
   router,
   render: h => h(App),

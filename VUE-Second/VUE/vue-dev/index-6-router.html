@@ -9,15 +9,15 @@
 	</head>
 	<body>
 		<div id="app">
-			<router-link to="/one"><button>one</button></router-link>
-			<router-link to="/two"><button>two</button></router-link>
+			<router-link to="/one/1"><button>one</button></router-link>
+			<router-link to="/two/2"><button>two</button></router-link>
 			<router-view></router-view>
 			<button type="button" @click="push()">$router</button>
 		</div>
 		<script type="text/javascript">
 		// 组件
 			var one = {
-				template:"<div><h1>one</h1></div>"
+				template:"<div>{{$router.params.id}}</div>"
 			}
 			var two = {
 				template:"<div><h1>two</h1></div>"
@@ -26,11 +26,11 @@
 			var routes = [
 				// 单个route
 				{
-					path:"/one",
+					path:"/one/:id",
 					component:one
 				},
 				{
-					path:"/two",
+					path:"/two/:id",
 					component:two
 				}
 			]

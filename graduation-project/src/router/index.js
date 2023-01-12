@@ -15,41 +15,56 @@ import lockService from "../components/remote-control/lock-service"
 import history from "../components/video-monitor/history";
 import monitor from "../components/video-monitor/monitor";
 import topicView from "../components/remote-control/topicView";
+import one from "../views/one";
+import two from "../views/two";
+import two_one from "../views/two-one"
 Vue.use(VueRouter)
 
 const routes = [
-  {path:'/',redirect:'/login'},
+    // {path:'/',redirect:'/login'},
+    {path: '/', redirect: '/one'},
+    // {path: "/login",component: login},
+    {path: "/one", component: one},
+    {
+        path: "/two/:id",
+        component: two,
+        name: "twoComponent",
+        children: [
+            {path: '', component: two_one, name: "two-one"},
+            {path: "one", component: two_one, name: "two-one"}
+        ]
+    },
 
-  {path: "/login",component: login},
+    {
+        path: "/home", component: home,
+        redirect: '/welcome',
+        children: [
+            {path: '/welcome', component: welcome},
+            {path: '/user', component: user},
+            {path: '/dep', component: dep},
+            {path: '/role', component: role},
+            {path: '/perm', component: perm},
+            {path: '/log', component: log},
+            {path: '/client', component: client},
+            {path: '/device', component: device},
+            {path: '/lockService', component: lockService},
 
-  {path: "/home",component: home,
-    redirect:'/welcome',
-    children:[
-      {path: '/welcome',component: welcome},
-      {path: '/user', component: user },
-      {path: '/dep', component: dep },
-      {path: '/role', component: role },
-      {path: '/perm', component: perm },
-      {path: '/log', component: log },
-      {path: '/client', component: client },
-      {path: '/device', component: device },
-      {path: '/lockService', component: lockService },
+            {path: '/history', component: history},
+            {path: '/monitor', component: monitor},
+            {path: '/topic', component: topicView},
+            {
+                path: '/dc', redirect: to => {
+                    window.open('https://appdevelop.czjy.hanyunapp.cn/moc/access/machine/variateConfig', '_bank')
+                }
+            },
 
-      {path: '/history', component: history },
-      {path: '/monitor', component: monitor },
-      {path: '/topic', component: topicView },
-      {path: '/dc', redirect: to => {
-          window.open('https://appdevelop.czjy.hanyunapp.cn/moc/access/machine/variateConfig', '_bank')
-        }
-      },
-
-    ]
-  }
+        ]
+    }
 
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 //路由守卫，防止恶意跳转
 router.beforeEach((to,from,next)=>{

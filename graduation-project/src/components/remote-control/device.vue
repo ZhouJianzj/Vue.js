@@ -335,6 +335,7 @@ export default {
 
     //删除设备
     async deleteDevice(id) {
+      this.$http.get()
       const {data: res} = await this.$http.delete("/rc/device/deleteDevice", {params: {id: id}});
       if (res.code == 200) {
         this.$message.success(res.message)
